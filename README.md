@@ -60,6 +60,8 @@ Course organised by;
 3) Mark Otiende 
 4) Alice Kamau, PhD
 5) Kiti Alii, PhD
+6) Moses Kioko
+
 
 Contact:
 Pwani University, Kenya.
