@@ -63,10 +63,10 @@ Course organised by;
 6) Moses Kioko
 
 
-Contact:
-Pwani University, Kenya.
-Address: P.O. Box 195-80108, Kenya
-email: r.kigathi@pu.ac.ke/ken@keniajin.com
+Contact:  
+Pwani University, Kenya.  
+Address: P.O. Box 195-80108, Kenya  
+email: r.kigathi@pu.ac.ke/ken@keniajin.com  
 
 
 
