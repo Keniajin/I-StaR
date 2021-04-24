@@ -1,0 +1,75 @@
+h2, .h2 {
+    margin-top: 80px;
+}
+
+
+.gist {
+   overflow:auto;
+}
+
+.gist .blob-wrapper.data {
+   max-height:300px;
+   overflow:auto;
+}
+
+
+.task {
+  border:3px;
+  border-style:solid;
+  padding: 0.1em;
+  margin: 0em;
+  border-color:#446E9B
+}
+
+
+.notebox {
+  border:2px;
+  border-style:solid;
+  padding: 1em 1em 0.3em 1em;
+  margin-bottom: 15px;
+  border-color:#009B8F
+}
+
+
+.Note {
+  font-weight:bold;
+  color:#009B8F;
+}
+
+
+.scroll-400 {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: inherit;
+}
+
+
+
+.highlight_code {
+background-color: lightblue;
+font-size: 20px !important;
+border: 1px solid red;
+font-weight: bold;
+}
+
+
+pre {
+  font-size: 20px;
+}
+
+
+.forceBreak {
+  -webkit-column-break-after: always;
+  break-after: column;
+}
+
+.image_float {
+  vertical-align: text-top;
+}
+
+
+.inverse {
+  background-color: #282522;
+  color: #FFFFFF;
+
+}

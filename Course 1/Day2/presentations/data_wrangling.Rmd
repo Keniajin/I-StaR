@@ -5,7 +5,7 @@ output:
   ioslides_presentation: 
      widescreen: true
      smaller: true
-     css: style.css
+     css: ../../style.css
   beamer_presentation:
     theme: CambridgeUS
     colortheme: sidebartab
@@ -16,6 +16,7 @@ output:
 library(kableExtra)
 library(tidyverse)
 options(knitr.table.format = "latex")
+knitr::opts_chunk$set(fig.align="center")
 ```
 
 ## The tidyverse help
@@ -222,6 +223,15 @@ select(.data = DATA, ...)
 
   - `DATA` = Data frame to transform
   - `...` = variables to select
+  
+  
+***
+
+### Select specific columns
+
+```{r , echo=FALSE, out.height=  '100%', out.width='70%'}
+knitr::include_graphics('images/select.PNG')
+``` 
 
 ## Our data
 
@@ -272,6 +282,15 @@ filter(.data = DATA, ...)
   - `DATA` = Data frame to transform
   - `...` = One or more tests
   - `filter()` returns each row for which the test is TRUE
+
+***
+
+### Filter specific rows
+
+```{r , echo=FALSE, out.height=  '100%', out.width='70%'}
+knitr::include_graphics('images/filter.PNG')
+``` 
+
   
 ## Our data
 
@@ -452,7 +471,15 @@ mutate(.data = DATA, ...)
 
   - `DATA` = Data frame to transform
   - `...` = Columns to make
-  
+
+***
+### Mutate a new column
+
+```{r , echo=FALSE, out.height=  '100%', out.width='70%'}
+knitr::include_graphics('images/mutate.PNG')
+``` 
+
+ 
 ## mutate the gdp variable
 
 ```{r, class.source='highlight_code'}
@@ -502,8 +529,6 @@ mutate(gapminder,
                            "After 2000",
                            "Before 2000"))
 ```
-
-
 
 
 
@@ -614,7 +639,7 @@ gapminder_2002_log
 
 
 
-## %>%
+## %>% : Pipe operator
 
 ```{r, eval=FALSE}
 leave_house(
@@ -655,6 +680,11 @@ Compute a table of summaries: summarize()
 ## Summarize
 
 
+```{r , echo=FALSE, out.height=  '100%', out.width='70%'}
+knitr::include_graphics('images/summarise.PNG')
+``` 
+
+
 tidyr: reshape data
 ===
 
@@ -678,6 +708,13 @@ DATA %>%
  - values_from = Column(s) to to get the cell values from to be into wider format.
  - `...` = other specifications (check help)
  
+****
+### Pivot wider and longer
+
+```{r , echo=FALSE, out.height=  '100%', out.width='70%'}
+knitr::include_graphics('images/pivot.PNG')
+``` 
+
 
 ***
 
