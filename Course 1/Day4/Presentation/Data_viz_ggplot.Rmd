@@ -332,24 +332,17 @@ https://www.data-to-viz.com/
 
 ```{r, echo=FALSE}
   #Start with data and aesthetics
-ggplot(data = bw_df ,
-       mapping = aes(x = gestwks,
-                     y = bweight)) +
-#Add a point geom
-  geom_point(aes(color = sex,shape= factor(ethnic))) +
-##Add a smooth geom
-  #geom_smooth() +
-##Make it straight
+bw_df %>% 
+  mutate(ethnic2=as.factor(ethnic)) %>% 
+  ggplot(aes(x = gestwks,y = bweight)) +
+  geom_point(aes(color = sex,shape=ethnic2)) +
   geom_smooth(method = "lm") +
-#Facet by sex
   facet_wrap(vars(sex), ncol = 2) +
-## add labels
     labs(x = "Gestation weeks", y = "Birthweight",
        color = "Sex",
        title = "Lower gestation weeks leads to low birthweight",
        subtitle = "Birth weight is in grams",
        caption = "Is there something we can observe by gender") +
-  #Add a theme
   theme_bw()+
   theme(plot.title=element_text(size=15, face="bold"), 
                   axis.text.x=element_text(size=8), 
