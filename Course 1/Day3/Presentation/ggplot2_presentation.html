@@ -378,10 +378,9 @@ Alice Kamau| Ken Mwai | Mark Otiende
 </div>
 <div id="exporting-plots" class="slide section level2">
 <h1>Exporting plots</h1>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar graphs for categorical variables</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bw_df, <span class="fu">aes</span>(<span class="at">x =</span> bweight)) <span class="sc">+</span> <span class="fu">geom_area</span>(<span class="fu">aes</span>(<span class="at">fill =</span> sex), </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;bin&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;Output/Ethnicity.png&quot;</span>, my_plot, <span class="at">width =</span> <span class="dv">15</span>, <span class="at">height =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bw_df, <span class="fu">aes</span>(<span class="at">x =</span> bweight)) <span class="sc">+</span> <span class="fu">geom_area</span>(<span class="fu">aes</span>(<span class="at">fill =</span> sex), </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;bin&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;Output/Ethnicity.png&quot;</span>, my_plot, <span class="at">width =</span> <span class="dv">15</span>, <span class="at">height =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 

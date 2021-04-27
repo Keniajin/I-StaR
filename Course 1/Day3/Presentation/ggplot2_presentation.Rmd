@@ -278,8 +278,6 @@ http://www.sthda.com/english/wiki/be-awesome-in-ggplot2-a-practical-guide-to-be-
 ## Exporting plots
 
 ```{r}
-  
-# Bar graphs for categorical variables
 
 my_plot<- ggplot(data=bw_df, aes(x=bweight)) + 
 geom_area(aes(fill = sex), stat ="bin", alpha=0.6)  + theme_bw()
