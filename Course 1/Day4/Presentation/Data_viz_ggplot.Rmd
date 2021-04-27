@@ -284,6 +284,35 @@ ggplot(data = bw_df ,
   scale_color_discrete(name="Sex")
 ```
 
+## Exporting plots
+
+```{r}
+
+my_plot2 <- ggplot(data = bw_df ,
+       mapping = aes(x = gestwks,
+                     y = bweight,
+                     color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(vars(sex), ncol = 2) +
+    labs(x = "Gestation weeks", y = "Birthweight",
+       color = "Sex",
+       title = "Lower gestation weeks leads to low birthweight",
+       subtitle = "Birth weight is in grams",
+       caption = "Is there something we can observe by gender") +
+  theme_bw()+
+  theme(plot.title=element_text(size=15, face="bold"), 
+                  axis.text.x=element_text(size=8), 
+                  axis.text.y=element_text(size=8),
+                  axis.title.x=element_text(size=10),
+                  axis.title.y=element_text(size=10)) + 
+  scale_color_discrete(name="Sex")
+
+ggsave("Output/Bweight.png", my_plot2, width = 15, height = 10)
+
+```
+
+
 ## Useful link and resource with examples and code
 
 https://www.data-to-viz.com/
