@@ -55,6 +55,7 @@ library(tidyverse)
 
 ```{r, eval=FALSE}
 setwd("/Users/akamau/Documents/I-StaR/Course 1/Day4/Presentation/")
+
 ```
 
 - Load the data
@@ -64,7 +65,7 @@ bw_df <- read.csv("Data/birthweight2.csv")
 names(bw_df)
 ```
 
-## Boxplot
+## Boxplot - for  a categorical and continuous variable
 
 - We will use boxplots to visualize the distribution of birth weight by gender:
 
@@ -137,7 +138,7 @@ ggplot(data = bw_df, mapping=aes(y=bweight, x=sex,fill=sex)) +
   ggtitle("Birth weight vs Sex") 
 ```
 
-##  Scatter plot with ggplot2
+##  Scatter plot with ggplot2 - for two continuous variables
 
 - We can build a plot sequentially to see how each grammatical layer changes the appearance  
 
@@ -308,7 +309,7 @@ my_plot2 <- ggplot(data = bw_df ,
                   axis.title.y=element_text(size=10)) + 
   scale_color_discrete(name="Sex")
 
-ggsave("Output/Bweight.png", my_plot2, width = 15, height = 10)
+ggsave("Output/Bweight.pdf", my_plot2, width = 15, height = 10)
 
 ```
 
@@ -320,9 +321,33 @@ https://www.data-to-viz.com/
 
 ## Break out session - Exercises
 
-- Replicate the plot above
+- Replicate the plot below and save
 
-- Can you make the shape of the points in the scatter plot vary with ethnicity?
+```{r}
+ggplot(data = bw_df ,
+       mapping = aes(x = gestwks,
+                     y = bweight,
+                     color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(vars(sex), ncol = 2) +
+    labs(x = "Gestation weeks", y = "Birthweight",
+       color = "Sex",
+       title = "Lower gestation weeks leads to low birthweight",
+       subtitle = "Birth weight is in grams",
+       caption = "Is there something we can observe by gender") +
+  theme_bw()+
+  theme(plot.title=element_text(size=15, face="bold"), 
+                  axis.text.x=element_text(size=8), 
+                  axis.text.y=element_text(size=8),
+                  axis.title.x=element_text(size=10),
+                  axis.title.y=element_text(size=10)) + 
+  scale_color_discrete(name="Sex")
+
+```
+
+
+- Can you make the shape of the points in the scatter plot to vary with ethnicity?
 
 - add a scale shape attribute. Hint use: scale_shape_discrete(name="legend title")
 

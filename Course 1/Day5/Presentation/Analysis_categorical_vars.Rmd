@@ -1,0 +1,112 @@
+---
+title: "Data Visualization using ggplot"
+author: "Alice Kamau| Ken Mwai | Mark Otiende"
+date: "7/5/2021"
+output: 
+  slidy_presentation: default
+  beamer_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = TRUE,
+      tidy.opts=list(blank=FALSE, width.cutoff=60,size = 'tiny'),
+      fig.width=10, 
+      fig.height=8)
+library(tidyverse)
+
+```
+
+# Learning objectives
+
+- Explain key procedures for the analysis of categorical data
+
+- Use R to perform tests on proportions for one, two or k categorical variables
+
+- Interpret the results of tests on proportions for one, two or k categorical variables
+
+## Understanding categorical variables
+
+- When we calculate summaries of categorical variables we are aiming to describe the sample distribution of the variable, just as with numeric variables.
+
+- The general question we need to address is, ‘what are the relative frequencies of different categories?’
+
+- Since a categorical variable takes a finite number of possible values, the simplest thing to do is tabulate the number of occurances of each type.
+- Load required package
+
+
+```{r , eval=FALSE}
+
+library(tidyverse)
+```
+
+- Set the directory
+
+```{r, eval=FALSE}
+setwd("/Users/akamau/Documents/I-StaR/Course 1/Day4/Presentation/")
+```
+
+- Load the data
+
+```{r}
+bw_df <- read.csv("Data/birthweight2.csv")
+names(bw_df)
+```
+
+
+```{r , eval=FALSE}
+
+table(bw_df$lbw2)
+table(bw_df$agegrp)
+```
+
+```{r , eval=FALSE}
+
+bar_plt <- ggplot(bw_df, aes(x = lbw2)) +
+  geom_bar()
+
+```
+
+## Associations between categorical variables
+
+- The general question we need to address is, “do different combinations of categories seem to be under or over represented?” 
+
+- We need to understand which combinations are common and which are rare. 
+
+- The simplest thing we can do is ‘cross-tabulate’ the number of occurrences of each combination. 
+
+- The resulting table is called a contingency table. 
+
+- The counts in the table are sometimes referred to as frequencies.
+
+```{r , eval=FALSE}
+
+xtabs(~ lbw2 + ht, data = bw_df)
+
+xtabs(~ lbw2 + ethnic, data = bw_df)
+
+xtabs(~ lbw2 + sex, data = bw_df)
+
+tab<- table(bw_df$lbw2,bw_df$sex)
+chisq.test(tab)
+fisher.test(tab)
+
+prop.table(table(bw_df$sex)) 
+prop.table(table(bw_df$lbw2,bw_df$sex))
+prop.test(table(bw_df$lbw2,bw_df$sex))
+```
+
+##
+
+```{r , eval=FALSE}
+bw_df2 <- bw_df %>%                                     # load the data
+select(lbw2, sex, ethnic) %>%             # select vectors into matrix and inspect
+#table()                                           # a machine readable table
+#prop.table()                                      # use proportion table if you want to
+ftable()                                           # human readable table
+bw_df2 
+
+```
+
+
