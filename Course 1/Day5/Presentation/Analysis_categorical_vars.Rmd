@@ -181,9 +181,15 @@ head(bw_df)
 - Generate a barplot of lbw stratified by sex (side by side)
 
 ```{r}
+brks <- c(0, 0.25, 0.5, 0.75, 1)
 
-ggplot(bw_df, aes(lbw)) + 
-    geom_bar(aes( fill=sex), position="dodge") 
+bw_df %>% 
+  group_by(sex, lbw) %>% 
+  summarise(count = n()) %>% 
+  mutate(perc = count/sum(count)) %>% 
+ggplot(aes(x=lbw,y = perc*100,fill=sex)) + 
+    geom_bar(stat="identity", width = 0.7,position="dodge") +
+  labs(y="Proportion (%)", x="Birth weight") + theme_bw()
 
 ```
 
