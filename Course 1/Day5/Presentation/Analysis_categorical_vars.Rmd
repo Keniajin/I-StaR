@@ -1,6 +1,6 @@
 ---
-title: "Data Visualization using ggplot"
-author: "Alice Kamau| Ken Mwai | Mark Otiende"
+title: "Exploratory analysis of categorical data "
+author: "Alice Kamau"
 date: "7/5/2021"
 output: 
   slidy_presentation: default
@@ -15,16 +15,17 @@ knitr::opts_chunk$set(echo = TRUE,
       fig.width=10, 
       fig.height=8)
 library(tidyverse)
-
+library(knitr)
 ```
 
-# Learning objectives
+## Learning objectives
 
 - Explain key procedures for the analysis of categorical data
 
 - Use R to perform tests on proportions for one, two or k categorical variables
 
 - Interpret the results of tests on proportions for one, two or k categorical variables
+
 
 ## Understanding categorical variables
 
@@ -33,39 +34,202 @@ library(tidyverse)
 - The general question we need to address is, ‘what are the relative frequencies of different categories?’
 
 - Since a categorical variable takes a finite number of possible values, the simplest thing to do is tabulate the number of occurances of each type.
+
+
 - Load required package
 
-
 ```{r , eval=FALSE}
-
 library(tidyverse)
 ```
 
 - Set the directory
 
 ```{r, eval=FALSE}
-setwd("/Users/akamau/Documents/I-StaR/Course 1/Day4/Presentation/")
+setwd("/Users/akamau/Documents/I-StaR/Course 1/Day5/Presentation/")
 ```
 
 - Load the data
 
 ```{r}
 bw_df <- read.csv("Data/birthweight2.csv")
-names(bw_df)
+
 ```
 
+## table() & prop.table()
 
-```{r , eval=FALSE}
+- table() & prop.table() is a quick way to pull together row/column frequencies and proportions for categorical variables
+
+```{r}
 
 table(bw_df$lbw2)
-table(bw_df$agegrp)
+
+prop.table(table(bw_df$lbw2))
+
 ```
 
-```{r , eval=FALSE}
+##
 
-bar_plt <- ggplot(bw_df, aes(x = lbw2)) +
-  geom_bar()
+```{r}
 
+ggplot(bw_df, aes(agegrp)) + 
+    geom_bar(aes(y = (..count..)/sum(..count..))) + 
+    scale_y_continuous(labels=scales::percent) +
+    ylab("Proportion (%)")
+
+```
+
+## R functions: binom.test() & prop.test()
+
+- The R functions binom.test() and prop.test() can be used to perform one-proportion test:
+
+- binom.test(): compute exact binomial test. Recommended when sample size is small
+
+- prop.test(): can be used when sample size is large ( N > 30). It uses a normal approximation to binomial
+
+- The syntax of the two functions are exactly the same. The simplified format is as follow:
+
+```{r,  eval=FALSE , class.source='highlight_code'}
+# syntax
+binom.test(x, n, p = 0.5, alternative = "two.sided")
+prop.test(x, n, p = NULL, alternative = "two.sided",
+          correct = TRUE)
+
+x: the number of of successes
+n: the total number of trials
+p: the probability to test against.
+correct: a logical indicating whether Yates’ continuity correction should be applied where possible.
+
+```
+
+## One sample proportion test
+
+- One sample proportion test is used to compare an observed proportion to a theoretical one, when there are only two categories.
+
+```{r}
+
+# Assumming a normal approximation
+# H0: Proportion of normal birthweight = 90%
+
+prop.test(sum(bw_df$lbw2==0),length(bw_df$lbw2==0),p=.9,correct=T)
+
+# Using exact binomial test
+
+binom.test(sum(bw_df$lbw2==0),length(bw_df$lbw2==0),p=.9)
+```
+
+##
+
+- The function returns:
+
+    - the value of Pearson’s chi-squared test statistic.
+    - a p-value
+    - a 95% confidence intervals
+    - an estimated probability of success (the proportion of children with normal weight)
+    
+## Recap of basic tools for analysing binary data
+
+- Descriptive: Bar charts and tabulations
+
+- Analytic: Use of prop.test() assuming normal approximation or using binom.test() based on the exact distribution
+
+
+## Exercise
+
+- Use birthweight2
+
+- Check the variables, and explore the data.
+
+- Generate a barplot of lbw stratified by sex
+
+- Get the proportion of low birth weight babies and 95% CI.
+
+- Get the proportion of lbw babies (and 95% CI) by sex.
+
+- Test this hypothesis p=0.90 (90% normal BW) for female babies and male babies separately
+
+
+## Solution
+
+- Check the variables, and explore the data.
+
+```{r}
+names(bw_df)
+str(bw_df)
+```
+
+##
+
+```{r}
+
+head(bw_df)
+
+```
+
+##
+
+- Generate a barplot of lbw stratified by sex (default is stacked)
+
+```{r}
+
+ ggplot(bw_df, aes(x = lbw)) +
+  geom_bar(aes(fill = sex))
+
+```
+
+##
+
+- Generate a barplot of lbw stratified by sex (side by side)
+
+```{r}
+
+ggplot(bw_df, aes(lbw)) + 
+    geom_bar(aes( fill=sex), position="dodge") 
+
+```
+
+##
+
+- Get the proportion of low birth weight babies and 95% CI.
+
+```{r}
+prop.test(sum(bw_df$lbw2==1),length(bw_df$lbw2==1))
+
+```
+
+## 
+
+- Get the proportion of lbw babies (and 95% CI) by sex.
+
+```{r}
+
+table(bw_df$sex)
+
+bw_female<-bw_df %>% 
+  filter(sex=="Female") 
+
+prop.table(table(bw_female$lbw2))
+
+bw_male<-bw_df %>% 
+  filter(sex=="Male") 
+
+prop.table(table(bw_male$lbw2))
+
+```
+
+## Females
+
+- Test this hypothesis p=0.90 (90% normal BW) for female babies and male babies separately
+
+```{r}
+
+prop.test(sum(bw_female$lbw2==0),length(bw_female$lbw2==0),p=.9,correct=T)
+```
+
+## Males
+
+```{r}
+
+prop.test(sum(bw_male$lbw2==0),length(bw_male$lbw2==0),p=.9,correct=T)
 ```
 
 ## Associations between categorical variables
@@ -80,33 +244,206 @@ bar_plt <- ggplot(bw_df, aes(x = lbw2)) +
 
 - The counts in the table are sometimes referred to as frequencies.
 
-```{r , eval=FALSE}
 
-xtabs(~ lbw2 + ht, data = bw_df)
+##
 
-xtabs(~ lbw2 + ethnic, data = bw_df)
+```{r}
+tab1<- table(bw_df$sex,bw_df$lbw2)
 
-xtabs(~ lbw2 + sex, data = bw_df)
+prop.table(tab1, 1) ## row proportions
+prop.table(tab1, 2) ## column proportions
 
-tab<- table(bw_df$lbw2,bw_df$sex)
-chisq.test(tab)
-fisher.test(tab)
+##
+prop.table(table(bw_df$sex,bw_df$lbw2),1)
+```
 
-prop.table(table(bw_df$sex)) 
-prop.table(table(bw_df$lbw2,bw_df$sex))
-prop.test(table(bw_df$lbw2,bw_df$sex))
+## Using dplyr & tidyr: Crosstabs
+
+- A good reasons for not just using the base table() command is when you dealing with missing data
+
+```{r}
+
+## frequency
+
+bw_df%>%
+  group_by(sex, lbw2)%>%
+  summarise(n=n())%>%
+  spread(lbw2, n)%>%
+  kable()
+
 ```
 
 ##
 
-```{r , eval=FALSE}
-bw_df2 <- bw_df %>%                                     # load the data
-select(lbw2, sex, ethnic) %>%             # select vectors into matrix and inspect
-#table()                                           # a machine readable table
-#prop.table()                                      # use proportion table if you want to
-ftable()                                           # human readable table
-bw_df2 
+```{r}
+
+## proportion
+
+bw_df%>%
+  group_by(sex, lbw2)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("sex","lbw2","prop"))%>%   #drop the frequency value
+  spread(lbw2, prop) %>%
+  kable()
 
 ```
 
+## Including some missing data
+
+```{r}
+bw_df %>%
+  mutate(
+    ethnic2 = ifelse(ethnic==2, NA, ethnic),
+    agegrp2=ifelse(agegrp=="40+yrs",NA,agegrp)
+  ) %>%
+  group_by(ethnic2, agegrp2) %>%
+  tally() %>%
+  data.frame() %>% ### <-- go from tbl_df to data.frame
+  spread(agegrp2, n)
+
+```
+
+## Using base R table() command
+
+- base R ignores this missing value in the output table
+
+```{r}
+bw_df$ethnic2<- ifelse(bw_df$ethnic==2, NA, bw_df$ethnic)
+bw_df$agegrp2<- ifelse(bw_df$agegrp=="40+yrs", NA, bw_df$agegrp)
+
+table(bw_df$ethnic2,bw_df$agegrp2)
+```
+
+## Comparing proportions
+
+- To test the hypothesis that the proportions are different, there are several ways to do this: 
+    
+    - Using chi-squared test 
+    - Using fishers exact test
+    - Two sample proportion test
+
+
+## Chi-squared test - Comparing proportions 
+
+- Comparing two (or more) proportions - the Chi-squared test uses Expected numbers.
+
+- Chi-squared test is valid for any contingency table
+
+- Assumptions: sufficient numbers in each cell of the table
+
+    - State the null hypothesis: No association between the two variables.
+    - Calculate the Chi-squared statistic from the Observed and Expected numbers
+    - Obtain the p-value for the data, under H0
+
+##
+
+```{r}
+
+chisq.test(bw_df$sex,bw_df$lbw2)
+
+# If Chi-squared test not valid then get R to test the null hypothesis H0 using the Fishers exact test.
+
+fisher.test(bw_df$sex,bw_df$lbw2)
+
+```
+
+## Two sample proportion test
+
+```{r}
+
+prop.test(table(bw_df$sex,bw_df$lbw2))
+
+```
+
+## Exercise
+
+- Use birthweight2, with outcome low birth weight (lbw)
+
+- Ensure you have the variable that shows 1= LBW, 0=Normal
+
+- Compare the proportion with low birth weight by the ethnic groups. 
+
+- Tabulate and test if lbw differs by ethnic. 
+
+- Tabulate the low birth weight by hypertension status of mothers (variable is called ht) 
+
+- Look at the association between lbw and hypertension (ht), using the chi-squared test
+
+
+## Solutions
+
+- Ensure you have the variable that shows 1= LBW, 0=Normal
+
+```{r} 
+
+table(bw_df$lbw2)
+
+```
+
+- Compare the proportion with low birth weight by the ethnic groups.
+
+```{r}
+
+prop.table(table(bw_df$ethnic,bw_df$lbw2),1)
+
+```
+
+## 
+
+- Test if lbw differs by ethnic. 
+
+```{r} 
+
+## Chi-squared test can be used for larger tables, with more categories (e.g. ethnic).
+
+chisq.test(bw_df$ethnic,bw_df$lbw2)
+
+prop.test(table(bw_df$ethnic,bw_df$lbw2))
+
+```
+
+## 
+
+- Tabulate the low birth weight by hypertension status of mothers (variable is called ht) 
+
+```{r}
+
+## frequency
+
+bw_df%>%
+  group_by(ht, lbw2)%>%
+  summarise(n=n())%>%
+  spread(lbw2, n)%>%
+  kable()
+
+```
+
+##
+
+```{r}
+
+## proportion
+
+bw_df%>%
+  group_by(ht, lbw2)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n))%>%
+  subset(select=c("ht","lbw2","prop"))%>%   #drop the frequency value
+  spread(lbw2, prop)%>%
+  kable()
+
+```
+
+##
+
+- Look at the association between lbw and hypertension (ht), using the chi-squared test
+
+```{r}
+
+chisq.test(bw_df$ht,bw_df$lbw2)
+
+prop.test(table(bw_df$ht,bw_df$lbw2))
+
+```
 

@@ -1,7 +1,7 @@
 ---
 title: "Data Visualization using ggplot"
 author: "Alice Kamau| Ken Mwai | Mark Otiende"
-date: "7/5/2021"
+date: "6/5/2021"
 output: 
   slidy_presentation: default
   beamer_presentation: default
