@@ -52,7 +52,7 @@ library(tidyverse)
 - Set the directory
 
 ```{r, eval=FALSE}
-setwd("/Users/akamau/Documents/I-StaR/Course 1/Day3/Presentation/")
+setwd("~")
 
 ```
 
