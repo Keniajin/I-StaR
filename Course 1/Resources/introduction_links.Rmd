@@ -1,0 +1,49 @@
+---
+title: "R Notebook for I-StaR"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+This is an [I-StaR - link will be updated soon](https://github.com/Keniajin/I-StaR) Notebook. Kindly ensure, if you can , to check out the resources below before the start of I-StaR Course 1.
+
+# Introduction to R and RStudio
+
+R is a free, open-source programming language and software environment for statistical computing, bioinformatics, visualization, and general computing. This page highlights some of the important links and resources , **https://stackoverflow.com/tags/r/info**
+
+## Swirl Stats
+On this page,you walk through each of the steps required to begin using R and RStudio and the swirl R package  
+
+ - https://swirlstats.com/students.html 
+ - https://github.com/swirldev/swirl_courses#swirl-courses
+
+
+# R for Data Science
+
+- https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R
+
+- https://r4ds.had.co.nz
+
+- https://stackoverflow.blog/2017/10/10/impressive-growth-r/
+
+# Other important links 
+
+## How do I ask a good question? 
+
+ - https://stackoverflow.com/help/how-to-ask
+ 
+ - https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example
+ 
+ 
+### You cant do data science with a GUI
+
+ - https://www.youtube.com/watch?v=cpbtcsGE0OA
+
+
+### ggplot resources
+
+- https://ggplot2-book.org/introduction.html
+
+ - http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/
