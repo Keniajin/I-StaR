@@ -6,11 +6,28 @@ output:
     number_sections: false
     theme: spacelab
     highlight: tango
-    css: style.css
+    css: ../../style.css
 ---
 
+<style type="text/css">
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 25px;
+}
+pre {
+  font-size: 25px
+}
+
+slides > slide:not(.nobackground):after {
+  content: ""
+}
+</style>
+
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE , fig.align = 'center')
 ```
 
 ## 1 – Naming conventions
@@ -139,11 +156,40 @@ Take a first look at the data. Useful functions are
 `dim()`, `head()`, `str()` and `summary()`.
 :::
 
+***
+
 #### Solution
 ```{r load-mice-solution}
+## shows the dimension of the data
 dim(mtcars)
+```
+
+
+***
+
+```{r}
+## shows the first few observations of the data
 head(mtcars)
+
+```
+
+
+***
+
+```{r}
+## checks the data structure
 str(mtcars)
+
+```
+
+
+***
+
+```{r}
 summary(mtcars)
 ```
 
+
+***
+
+![](images/code_R.PNG)
