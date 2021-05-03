@@ -11,7 +11,7 @@
 
 <meta name="author" content="Author: Moses Kioko" />
 
-<meta name="date" content="2021-04-26" />
+<meta name="date" content="2021-05-01" />
 
 <title>Pwani University R DAAD Training</title>
 
@@ -261,7 +261,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Pwani University R DAAD Training</h1>
 <h4 class="author">Author: Moses Kioko</h4>
-<h4 class="date">April 26, 2021</h4>
+<h4 class="date">May 01, 2021</h4>
 
 </div>
 
@@ -419,14 +419,22 @@ median_weight &lt;- median(birth_weight_nodup$bweight, na.rm = T)
 sd_weight &lt;- sd(birth_weight_nodup$bweight, na.rm = T)
 
 #calculate the variance weight 
-var_weight &lt;- var(birth_weight_nodup$bweight, na.rm = T)</code></pre>
+var_weight &lt;- var(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate inter quatile ranges 
+iqr_weight &lt;- quantile(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the range 
+range_weight &lt;- paste(min_weight,max_weight, sep = &#39; to &#39;)</code></pre>
 <p>The following are the descriptive analysis for birth weight:</p>
 <ul>
 <li>Minimum Birth Weight <strong>700</strong> grams</li>
 <li>Maximum Birth Weight <strong>4650</strong> grams</li>
+<li>Birth Weight Range <strong>700 to 4650</strong> grams</li>
 <li>Mean Birth Weight <strong>3133.04</strong> grams</li>
 <li>Median Birth Weight <strong>3200</strong> grams</li>
 <li>Birth Weight Standard Deviation <strong>645.76</strong> grams</li>
+<li>Birth Weight Inter Quantile Range <strong>700, 2857.5, 3200, 3550, 4650</strong> grams</li>
 </ul>
 <p>Most of the above single calculations can also be achieved using <strong>summary()</strong> command.</p>
 <p><em>Please note that I have only subset the data using square brackets to capture numeric values in data apart from sex variable</em></p>
@@ -472,8 +480,8 @@ gender_weight &lt;- birth_weight_data %&gt;%
 <p><strong>Simple Reactable Table Formart</strong></p>
 <p>Print the output in a <strong>simple table</strong> with help of <strong>reactable package</strong></p>
 <pre class="r"><code>reactable(gender_weight)</code></pre>
-<div id="htmlwidget-ccc548337f421b1e3c47" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ccc548337f421b1e3c47">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Gender":["Female","Male"],"Max Weight":[4416,4650],"Min Weight":[710,700],"Median Weight":[3130,3290],"Mean Weight":[3051.8,3211.3],"Standard Deviation":[614.65,665.98]},"columns":[{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric"},{"accessor":"Min Weight","name":"Min Weight","type":"numeric"},{"accessor":"Median Weight","name":"Median Weight","type":"numeric"},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric"},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"81b48cdda0144fe95a1e8e29818bdbf7","key":"81b48cdda0144fe95a1e8e29818bdbf7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-92c53ae9531357b0795e" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-92c53ae9531357b0795e">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Gender":["Female","Male"],"Max Weight":[4416,4650],"Min Weight":[710,700],"Median Weight":[3130,3290],"Mean Weight":[3051.8,3211.3],"Standard Deviation":[614.65,665.98]},"columns":[{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric"},{"accessor":"Min Weight","name":"Min Weight","type":"numeric"},{"accessor":"Median Weight","name":"Median Weight","type":"numeric"},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric"},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"81b48cdda0144fe95a1e8e29818bdbf7","key":"81b48cdda0144fe95a1e8e29818bdbf7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 <p><strong>Advanced Reactable Table</strong></p>
 <p>The customized tables are easy to scan through since we highlight the maximum values and minimum values for each variable.</p>
 <pre class="r"><code>reactable(gender_weight,
@@ -486,8 +494,8 @@ gender_weight &lt;- birth_weight_data %&gt;%
             `Median Weight` = colDef(align =&#39;center&#39;, style = highlight_min_max(gender_weight)),
             `Mean Weight` = colDef(align =&#39;center&#39;, style = highlight_min_max(gender_weight))
           ))</code></pre>
-<div id="htmlwidget-0f3e66185301cae91a76" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-0f3e66185301cae91a76">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Gender":["Female","Male"],"Max Weight":[4416,4650],"Min Weight":[710,700],"Median Weight":[3130,3290],"Mean Weight":[3051.8,3211.3],"Standard Deviation":[614.65,665.98]},"columns":[{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"2e425d32d20bab1def568e6055403cbf","key":"2e425d32d20bab1def568e6055403cbf"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8577f1ba5fc72adda8a6" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8577f1ba5fc72adda8a6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Gender":["Female","Male"],"Max Weight":[4416,4650],"Min Weight":[710,700],"Median Weight":[3130,3290],"Mean Weight":[3051.8,3211.3],"Standard Deviation":[614.65,665.98]},"columns":[{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"2e425d32d20bab1def568e6055403cbf","key":"2e425d32d20bab1def568e6055403cbf"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="age-group-weight-numerical-analysis" class="section level3">
 <h3>Age Group Weight Numerical Analysis</h3>
@@ -512,8 +520,8 @@ reactable(agegroup_weight,
             `Median Weight` = colDef(align =&#39;center&#39;, style = highlight_min_max(agegroup_weight)),
             `Mean Weight` = colDef(align =&#39;center&#39;, style = highlight_min_max(agegroup_weight))
           ))</code></pre>
-<div id="htmlwidget-3dfab0dd198b609ce186" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3dfab0dd198b609ce186">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Age Group":["20-29 yrs","30-34 yrs","35-39 yrs","40+yrs"],"Max Weight":[4520,4550,4650,4330],"Min Weight":[710,700,825,860],"Median Weight":[3194,3200,3209,3130],"Mean Weight":[3102.3,3147.8,3132.9,3112.6],"Standard Deviation":[746.83,625.91,625.93,666.27]},"columns":[{"accessor":"Age Group","name":"Age Group","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[null,null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[null,null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null},null,null]},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"d0c5dd2f33b091d61c8d07b5da07b24c","key":"d0c5dd2f33b091d61c8d07b5da07b24c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c58a8ccc765d0657ee9a" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c58a8ccc765d0657ee9a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Age Group":["20-29 yrs","30-34 yrs","35-39 yrs","40+yrs"],"Max Weight":[4520,4550,4650,4330],"Min Weight":[710,700,825,860],"Median Weight":[3194,3200,3209,3130],"Mean Weight":[3102.3,3147.8,3132.9,3112.6],"Standard Deviation":[746.83,625.91,625.93,666.27]},"columns":[{"accessor":"Age Group","name":"Age Group","type":"character"},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[null,null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,{"fontWeight":"bold","color":"green","background":null}]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[null,null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null},null,null]},{"accessor":"Standard Deviation","name":"Standard Deviation","type":"numeric"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"d0c5dd2f33b091d61c8d07b5da07b24c","key":"d0c5dd2f33b091d61c8d07b5da07b24c"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="ethic-group-gender-and-weight-anaysis" class="section level3">
 <h3>Ethic Group Gender and Weight Anaysis</h3>
@@ -539,8 +547,8 @@ reactable(gender_ethic_weight,
             `Mean Weight` = colDef(align =&#39;center&#39;, style = highlight_min_max(gender_ethic_weight)),
             Count = colDef(align =&#39;center&#39;, style = highlight_min_max(gender_ethic_weight))
           ))</code></pre>
-<div id="htmlwidget-b33322881d0721c7da9a" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b33322881d0721c7da9a">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Ethnic":["group I","group I","group II","group II","group III","group III","group IV","group IV"],"Gender":["Female","Male","Female","Male","Female","Male","Female","Male"],"Count":[123,136,44,37,75,84,72,69],"Max Weight":[4416,4650,3980,4450,4141,4550,4300,4520],"Min Weight":[1400,1020,710,700,825,1000,1320,1160],"Median Weight":[3200,3315,3100,3225,3050,3272.5,3180,3200],"Mean Weight":[3117,3221.9,2996.5,3167.5,2912.3,3171.9,3119.7,3261.7]},"columns":[{"accessor":"Ethnic","name":"Ethnic","type":"character"},{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Count","name":"Count","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},null,{"fontWeight":"bold","color":"red","background":null},null,null,null,null]},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null},null,null,null,null,null]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null},null,null,null,null]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null},null,null,null]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[null,null,null,null,{"fontWeight":"bold","color":"red","background":null},null,null,{"fontWeight":"bold","color":"green","background":null}]}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"4d3b369818e7c2d93f95a7b72b896069","key":"4d3b369818e7c2d93f95a7b72b896069"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-97f9b92b47b29dbdff2f" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-97f9b92b47b29dbdff2f">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Ethnic":["group I","group I","group II","group II","group III","group III","group IV","group IV"],"Gender":["Female","Male","Female","Male","Female","Male","Female","Male"],"Count":[123,136,44,37,75,84,72,69],"Max Weight":[4416,4650,3980,4450,4141,4550,4300,4520],"Min Weight":[1400,1020,710,700,825,1000,1320,1160],"Median Weight":[3200,3315,3100,3225,3050,3272.5,3180,3200],"Mean Weight":[3117,3221.9,2996.5,3167.5,2912.3,3171.9,3119.7,3261.7]},"columns":[{"accessor":"Ethnic","name":"Ethnic","type":"character"},{"accessor":"Gender","name":"Gender","type":"character"},{"accessor":"Count","name":"Count","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},null,{"fontWeight":"bold","color":"red","background":null},null,null,null,null]},{"accessor":"Max Weight","name":"Max Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},{"fontWeight":"bold","color":"red","background":null},null,null,null,null,null]},{"accessor":"Min Weight","name":"Min Weight","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null},null,null,null,null]},{"accessor":"Median Weight","name":"Median Weight","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null},null,null,null]},{"accessor":"Mean Weight","name":"Mean Weight","type":"numeric","align":"center","style":[null,null,null,null,{"fontWeight":"bold","color":"red","background":null},null,null,{"fontWeight":"bold","color":"green","background":null}]}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"4d3b369818e7c2d93f95a7b72b896069","key":"4d3b369818e7c2d93f95a7b72b896069"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -558,8 +566,8 @@ reactable(gender_ethic_weight,
                                 TRUE ~ &#39;Female&#39;)) %&gt;% 
   dplyr::mutate(date_birth = lubridate::mdy(date_birth)) %&gt;% # change character to date formart 
   dplyr::mutate(date_exit = lubridate::mdy(date_exit)) %&gt;% 
-  dplyr::mutate(days= as.numeric(difftime(date_exit,date_birth, units =&#39;days&#39;))) %&gt;%  #calculate the live span
-  dplyr::mutate(months = round((as.numeric(difftime(date_exit,date_birth, units =&#39;days&#39;)))/(365.25/12),1)) %&gt;% 
+  dplyr::mutate(days= difftime(date_exit,date_birth, units =&#39;days&#39;)) %&gt;%  #calculate the live span
+  dplyr::mutate(days= as.numeric(days)) %&gt;%  # convert to numeric
   dplyr::mutate(mom_educ = str_to_title(mom_educ)) %&gt;%  #change the case for mother education 
   dplyr::rename(`Mom Education` = mom_educ, #rename variables names
                 `Birth Location` = locn_birth,
@@ -597,8 +605,8 @@ reactable(place_birth,
             `No: Home` = colDef(align = &#39;center&#39;,style = highlight_min_max(place_birth)),
             `No: Hospital` = colDef(align = &#39;center&#39;, style = highlight_min_max(place_birth))
           ))</code></pre>
-<div id="htmlwidget-29a871876d231fd6a0ff" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-29a871876d231fd6a0ff">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Mom Education":["No Education","No Education","Some Education","Some Education"],"Status":["Status I","Status II","Status I","Status II"],"No: Home":[277,31,18,1],"No: Hospital":[16,1,148,8],"Hospital Delivery":["4.9%","0.3%","84.6%","4.6%"]},"columns":[{"accessor":"Mom Education","name":"Mom Education","type":"character"},{"accessor":"Status","name":"Status","type":"character"},{"accessor":"No: Home","name":"No: Home","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"No: Hospital","name":"No: Hospital","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null},null]},{"accessor":"Hospital Delivery","name":"Hospital Delivery","type":"character"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"dataKey":"82a978c0dc6cd1ec93af25102a393a0b","key":"82a978c0dc6cd1ec93af25102a393a0b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e1378c822814a2384ba5" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e1378c822814a2384ba5">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Mom Education":["No Education","No Education","Some Education","Some Education"],"Status":["Status I","Status II","Status I","Status II"],"No: Home":[277,31,18,1],"No: Hospital":[16,1,148,8],"Hospital Delivery":["4.9%","0.3%","84.6%","4.6%"]},"columns":[{"accessor":"Mom Education","name":"Mom Education","type":"character"},{"accessor":"Status","name":"Status","type":"character"},{"accessor":"No: Home","name":"No: Home","type":"numeric","align":"center","style":[{"fontWeight":"bold","color":"green","background":null},null,null,{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"No: Hospital","name":"No: Hospital","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},{"fontWeight":"bold","color":"green","background":null},null]},{"accessor":"Hospital Delivery","name":"Hospital Delivery","type":"character"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"dataKey":"82a978c0dc6cd1ec93af25102a393a0b","key":"82a978c0dc6cd1ec93af25102a393a0b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="dates-analysis" class="section level2">
 <h2>Dates Analysis</h2>
@@ -606,7 +614,7 @@ reactable(place_birth,
 <pre class="r"><code>#create date summaries 
 live_span &lt;- child_death_clean %&gt;% 
   dplyr::select_all(str_to_title) %&gt;% 
-  dplyr::group_by(`Mom Education`,Status) %&gt;% 
+  dplyr::group_by(`Birth Location`,Status) %&gt;% 
   dplyr::summarise(`Min Days` = min(Days,na.rm = T),
                    `Max Days` = max(Days,na.rm =T),
                    `Average Days` = median(Days,na.rm = T)) 
@@ -621,8 +629,8 @@ reactable::reactable(live_span,
                       `Max Days`  = colDef(align =&#39;center&#39;,style = highlight_min(live_span)),
                       `Average Days` = colDef(align = &#39;center&#39;,style = highlight_min(live_span))
                      ))</code></pre>
-<div id="htmlwidget-b198d23936be149f4daf" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-b198d23936be149f4daf">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Mom Education":["No Education","No Education","Some Education","Some Education"],"Status":["Status I","Status II","Status I","Status II"],"Min Days":[1826,1,1826,1],"Max Days":[1826,863,1826,968],"Average Days":[1826,23,1826,1]},"columns":[{"accessor":"Mom Education","name":"Mom Education","type":"character"},{"accessor":"Status","name":"Status","type":"character"},{"accessor":"Min Days","name":"Min Days","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Max Days","name":"Max Days","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,null]},{"accessor":"Average Days","name":"Average Days","type":"numeric","align":"center","style":[null,null,null,{"fontWeight":"bold","color":"red","background":null}]}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"29335f63333843be411ab30350ed5e40","key":"29335f63333843be411ab30350ed5e40"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-eda6bdbf893e0d4ca540" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-eda6bdbf893e0d4ca540">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Birth Location":["Home","Home","Hospital","Hospital"],"Status":["Status I","Status II","Status I","Status II"],"Min Days":[1826,1,1826,1],"Max Days":[1826,863,1826,968],"Average Days":[1826,23,1826,1]},"columns":[{"accessor":"Birth Location","name":"Birth Location","type":"character"},{"accessor":"Status","name":"Status","type":"character"},{"accessor":"Min Days","name":"Min Days","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,{"fontWeight":"bold","color":"red","background":null}]},{"accessor":"Max Days","name":"Max Days","type":"numeric","align":"center","style":[null,{"fontWeight":"bold","color":"red","background":null},null,null]},{"accessor":"Average Days","name":"Average Days","type":"numeric","align":"center","style":[null,null,null,{"fontWeight":"bold","color":"red","background":null}]}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"bordered":true,"striped":true,"compact":true,"dataKey":"1455386f16a378e625745f939e8e8513","key":"1455386f16a378e625745f939e8e8513"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

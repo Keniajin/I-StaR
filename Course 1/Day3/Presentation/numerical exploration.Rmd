@@ -1,0 +1,388 @@
+---
+title: "Pwani University R DAAD Training"
+author: "Author: Moses Kioko"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output:
+  html_document: 
+    theme: united
+    hightlight: tango
+    fontsize: 24pt
+    code_folding: show
+    toc: yes
+    toc_depth: 6
+    toc_float: yes
+  pdf_document:
+    fig_crop: false
+    toc: no
+    toc_depth: '6'
+always_allow_html: yes 
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Introduction to Numerical Analysis
+
+In this section we be looking into **part** of numerical analysis of data which involves calculating;
+
++ Minimum Value 
++ Maximum Value 
++ Mean 
++ Median 
++ Standard Deviation 
++ Variance 
++ Moments 
+  - First Moment 
+  - Second Moment *(Mean)*
+  - Third Moment *(Skewness)*
+  - Fourth Moment *(Kurtosis)*
+
+**Set Working Directory**
+
+Setting up working environment entails clearing the working space and setting a computer directory from where you can launch scripting of your projects comfortably
+
+```{r}
+#clear working space 
+rm(list =ls(all =T))
+
+#set working directory 
+setwd('D:/DAAD Training/Rmarkdown Script')
+```
+
+
+**Installing Libraries**
+
+To access the functions hosted in package we need to install the package necessary for handling our data-set. The following are the packages names we are essential in this endeavor 
+
+
+Package Name     |  Description 
+|-------------------------|-----------------------------------------------------------------------------------------------
+| Tidyverse Package       | Cleaning *(dplyr & tidyr)*, Manipulating*(dplyr & tidyr)* and plotting *(ggplot2)* data 
+| Janitor Package         | Cleaning column names
+| Lubridate Package       | Formatting and cleaning dates
+| Reactable Package       | Printing out tables
+| Reactablefmtr Package   | Formatting tables by adding conditional formatting elements 
+
+
+**Please note:** *Our Main Package is Tidyverse the rest are just but addons*
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#installing libraries 
+#install.packages('tidyverse',dependencies = T)
+#install.packages('janitor',dependencies = T)
+#install.packages('reactable', dependencies = T)
+#install.packages('reactablefmtr',dependencies = T)
+
+# install all the package at a go 
+#install.packages(c('tidyverse','janitor','reactable','reactablefmtr'),dependencies = T)
+```
+
+**Libraries**
+
+To make use of installed package we load them into R work-space using **Library()** command 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Read data, manipulate and plot the data 
+library(tidyverse)
+
+#clean the column names 
+library(janitor)
+
+#calculating percentages
+library(scales)
+
+#table packages 
+library(reactable)
+library(reactablefmtr)
+```
+
+**Load Data-Set**
+
+Load or read data are used interchangeably, we will read;
+
++ Child Weight Data-set
++ Child Death Data-set
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#read the data 
+birth_weight <- readr::read_csv('birthweight2.csv')
+child_death <- readr::read_csv('child.deaths.csv')
+```
+
+# Birth Weight Data-Set
+
+## Numerical Analysis 
+The first attempt on data-set should be to check the following 
+
++ Completeness - *missing values*
++ Duplicates - *Repeated record*
++ Variable Names - *do they conform to right format*
++ Data Types - *Numeric, characters/strings*
+
+### Cleaning Variable/Column Names
+ 
+There several ways on cleaning the column names by;
+
++ Replacing spaces with underscores 
++ Unify the variable name cases 
++ Replacing special characters with underscore
+
+```{r}
+birth_weight <- birth_weight %>% 
+  janitor::clean_names()
+
+child_death <- child_death %>% 
+  janitor::clean_names()
+```
+
+### Birth Weight Duplicates 
+
+Repeated records skew analysis , so to evade inaccurate analysis we check out the duplicated records.In R we can do it in two ways;
+
++ base package - *use duplicated in conjunction with which commands*
++ dplyr package - *use duplicate , duplicate_at ... etc*
+
+```{r}
+#flag the duplicates 
+birth_index <- which(duplicated(birth_weight$id, fromLast = T))
+
+#filter the data 
+birth_weight_duplicate <- birth_weight[birth_index,]
+birth_weight_nodup <- birth_weight[-birth_index,]
+```
+
+The ID for the duplicated record in birth weight data is **`r birth_weight_duplicate$id`** . We exclude one of this record before proceeding with our analysis.
+
+### Base R Numerical Exploration 
+We use base R commands to run descriptive analysis for numerical variables, this tests include calculating ; **Minimum**, **Maximum**,**Mean**, **Median**,**Variance**, **Standard Deviation** ..etc
+
+```{r}
+#calculate the maximum weight 
+max_weight <- max(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the minimum weight 
+min_weight <- min(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the mean weight 
+mean_weight <- mean(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the median weight 
+median_weight <- median(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the standard deviation weight 
+sd_weight <- sd(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the variance weight 
+var_weight <- var(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate inter quatile ranges 
+iqr_weight <- quantile(birth_weight_nodup$bweight, na.rm = T)
+
+#calculate the range 
+range_weight <- paste(min_weight,max_weight, sep = ' to ')
+```
+
+The following are the descriptive analysis for birth weight:
+
++ Minimum Birth Weight **`r min_weight`** grams 
++ Maximum Birth Weight **`r max_weight`** grams
++ Birth Weight Range **`r range_weight`** grams
++ Mean Birth Weight **`r round(mean_weight,2)`** grams
++ Median Birth Weight **`r round(median_weight,2)`** grams
++ Birth Weight Standard Deviation **`r round(sd_weight,2)`** grams
++ Birth Weight Inter Quantile Range  **`r iqr_weight`** grams
+
+Most of the above single calculations can also be achieved using **summary()** command.
+
+*Please note that I have only subset the data using square brackets to capture numeric values in data apart from sex variable*
+```{r}
+summary(birth_weight_nodup[,2:6])
+```
+
+### Tidyverse Numerical Exploration 
+
+Tidyverse package comes in handy in handling data especially running numeric analysis. In this exercise we will dwell on **Dplyr Package** to tidy-up the data and run descriptive analysis of desired variables i.e **Birth Weight** ... etc
+
+**Birth Weight Summaries for Child Gender **
+
+Create descriptive analysis on birth weight distributed over gender 
+```{r}
+# Rename some variable names and lre-label 
+birth_weight_data <- birth_weight_nodup %>% 
+      dplyr::mutate(ethnic = case_when(ethnic==1 ~ 'group I',
+                                     ethnic ==2 ~ 'group II',
+                                     ethnic ==3 ~ 'group III',
+                                     TRUE ~ 'group IV')) %>% 
+  dplyr::rename(Gender =sex,
+                `Age Group` = agegrp,
+                `Weight Classification` =lbw,
+                Ethnic = ethnic) 
+#create summaries 
+gender_weight <- birth_weight_data %>% 
+  group_by(Gender) %>% 
+  summarise(`Max Weight` = max(bweight,na.rm = T),
+            `Min Weight` = min(bweight, na.rm = T),
+            `Median Weight` = median(bweight, na.rm = T),
+            `Mean Weight` = round(mean(bweight, na.rm = T),1),
+            `Standard Deviation`= round(sd(bweight, na.rm = T),2)) 
+```
+
+**Simple Reactable Table Formart**
+
+Print the output in a **simple table** with help of **reactable package**
+```{r}
+reactable(gender_weight)
+```
+
+
+
+**Advanced Reactable Table**
+
+The customized  tables are easy to scan through since we highlight the maximum values and minimum values for each variable. 
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+reactable(gender_weight,
+          striped = T,
+          bordered = T,
+          compact = T,
+          columns = list(
+            `Max Weight` = colDef(align = 'center',style  = highlight_min_max(gender_weight)),
+            `Min Weight` = colDef(align ='center' ,style = highlight_min_max(gender_weight)),
+            `Median Weight` = colDef(align ='center', style = highlight_min_max(gender_weight)),
+            `Mean Weight` = colDef(align ='center', style = highlight_min_max(gender_weight))
+          ))
+```
+
+### Age Group Weight Numerical Analysis 
+
+This section highlights numerical analysis for weight grouped by age group
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#create summaries for agegroup 
+agegroup_weight <- birth_weight_data %>% 
+  group_by(`Age Group`) %>% 
+  summarise(`Max Weight` = max(bweight,na.rm = T),
+            `Min Weight` = min(bweight, na.rm = T),
+            `Median Weight` = median(bweight, na.rm = T),
+            `Mean Weight` = round(mean(bweight, na.rm = T),1),
+            `Standard Deviation`= round(sd(bweight, na.rm = T),2)) 
+
+#print summaries
+reactable(agegroup_weight,
+          striped = T,
+          bordered = T,
+          compact = T,
+          columns = list(
+            `Max Weight` = colDef(align = 'center',style  = highlight_min_max(agegroup_weight)),
+            `Min Weight` = colDef(align ='center' ,style = highlight_min_max(agegroup_weight)),
+            `Median Weight` = colDef(align ='center', style = highlight_min_max(agegroup_weight)),
+            `Mean Weight` = colDef(align ='center', style = highlight_min_max(agegroup_weight))
+          ))
+```
+
+### Ethic Group Gender and Weight Anaysis 
+
+This section highlight weight numerical exploration grouped by gender and ethnic group.
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#create the summaries
+gender_ethic_weight <- birth_weight_data%>% 
+  group_by(Ethnic,Gender) %>% 
+  summarise(Count = n(),
+            `Max Weight` = max(bweight,na.rm = T),
+            `Min Weight` = min(bweight, na.rm = T),
+            `Median Weight` = median(bweight, na.rm = T),
+            `Mean Weight` = round(mean(bweight, na.rm = T),1)) 
+
+#print the table for gender ethnic and weight analysis
+reactable(gender_ethic_weight,
+          striped = T,
+          bordered = T,
+          compact = T,
+          columns = list(
+            `Max Weight` = colDef(align = 'center',style  = highlight_min_max(gender_ethic_weight)),
+            `Min Weight` = colDef(align ='center' ,style = highlight_min_max(gender_ethic_weight)),
+            `Median Weight` = colDef(align ='center', style = highlight_min_max(gender_ethic_weight)),
+            `Mean Weight` = colDef(align ='center', style = highlight_min_max(gender_ethic_weight)),
+            Count = colDef(align ='center', style = highlight_min_max(gender_ethic_weight))
+          ))
+```
+
+# Child Death Data-Set
+
++ Labeling gender(sex)
++ Formatting date 
+  - Calculate the date differences
+  
+```{r}
+child_death_clean <- child_death %>% 
+  dplyr::mutate(sex = case_when(sex =='m' ~ 'Male', #change the labels 
+                                TRUE ~ 'Female')) %>% 
+  dplyr::mutate(date_birth = lubridate::mdy(date_birth)) %>% # change character to date formart 
+  dplyr::mutate(date_exit = lubridate::mdy(date_exit)) %>% 
+  dplyr::mutate(days= difftime(date_exit,date_birth, units ='days')) %>%  #calculate the live span
+  dplyr::mutate(days= as.numeric(days)) %>%  # convert to numeric
+  dplyr::mutate(mom_educ = str_to_title(mom_educ)) %>%  #change the case for mother education 
+  dplyr::rename(`Mom Education` = mom_educ, #rename variables names
+                `Birth Location` = locn_birth,
+                Gender = sex) %>% 
+  dplyr::mutate(status = case_when(status==1 ~ 'Status I',
+                                   TRUE ~ 'Status II')) 
+```
+
+## Child Death Descriptive Analysis
+This section we will be calculating the number of children and group them with the location of birth and level of mothers education.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# renaming multiple columns
+old_names <- c('status','Home','Hospital')
+new_names <- c('Status','No: Home','No: Hospital')
+
+#summaries 
+place_birth <- child_death_clean %>% 
+  group_by(`Mom Education`,`Birth Location`,status) %>% 
+  summarise(Count = n()) %>% 
+  #calculate percentages 
+  pivot_wider(names_from = `Birth Location`,values_from = Count) %>%
+  dplyr::mutate(`Hospital Delivery` = Hospital/(sum(Home)+sum(Hospital))) %>% 
+  #formart the percentages 
+  dplyr::mutate(`Hospital Delivery` = scales::percent(`Hospital Delivery`,accuracy = 0.1)) %>% 
+  #rename variables
+  dplyr::rename_at(vars(old_names),~ new_names)
+
+
+
+  
+
+#print the table
+reactable(place_birth,
+          striped = T, 
+          bordered =  T,
+          columns = list(
+            `No: Home` = colDef(align = 'center',style = highlight_min_max(place_birth)),
+            `No: Hospital` = colDef(align = 'center', style = highlight_min_max(place_birth))
+          ))
+```
+
+## Dates Analysis 
+
+This section will be looking at calculating the live span of the children based on their gender and status.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#create date summaries 
+live_span <- child_death_clean %>% 
+  dplyr::select_all(str_to_title) %>% 
+  dplyr::group_by(`Birth Location`,Status) %>% 
+  dplyr::summarise(`Min Days` = min(Days,na.rm = T),
+                   `Max Days` = max(Days,na.rm =T),
+                   `Average Days` = median(Days,na.rm = T)) 
+
+#print the date summaries in table
+reactable::reactable(live_span,
+                     bordered = T,
+                     striped = T,
+                     compact = T,
+                     columns = list(
+                      `Min Days` = colDef(align = 'center',style = highlight_min(live_span)),
+                      `Max Days`  = colDef(align ='center',style = highlight_min(live_span)),
+                      `Average Days` = colDef(align = 'center',style = highlight_min(live_span))
+                     ))
+```
+
