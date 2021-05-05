@@ -152,8 +152,7 @@ ggplot(data=bw_df, aes(x=bweight)) + geom_histogram()
 
 ```{r , eval=FALSE ,  class.source="highlight_code"}
 # This will not add the new layer and will return an error message
-ggplot(data=bw_df, aes(x=bweight)) 
-+ geom_histogram()
+ggplot(data=bw_df, aes(x=bweight)) + geom_histogram()
 
 ```
 
@@ -174,20 +173,22 @@ ggplot(data=bw_df, aes(x=bweight)) +
 ##
 
 ```{r}
+
 # adding aesthetics to the histogram
 
 ggplot(data=bw_df, aes(x=bweight)) +
-geom_histogram(breaks=seq(0,5000,200), fill="dark green", color="white", alpha=0.9)  
+geom_histogram( fill="gray", color="white", alpha=0.9)  
 
 ```  
 
 ##
 
 ```{r}
+
 # adding title to the histogram
 
 ggplot(data=bw_df, aes(x=bweight)) +
-geom_histogram(breaks=seq(0,5000,200), fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+geom_histogram( fill="gray", color="white", alpha=0.9) +
 ggtitle("Birth weight in grams") 
 
 ```  
@@ -202,7 +203,7 @@ ggtitle("Birth weight in grams")
 # 
 
 ggplot(data=bw_df, aes(x=gestwks)) +
-geom_density(breaks=seq(0,45,5), fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+geom_density(fill="light green", color="white", alpha=0.9) +
 ggtitle("Gestation in weeks") 
 
 ```  
@@ -223,11 +224,13 @@ geom_area(aes(fill = sex), stat ="bin", alpha=0.6)
   
 # Make the with fill based on 
 
-bw_df %>%
-  mutate(bw_cat=ifelse(bweight<2500,"LBW","Normal")) %>%
-  ggplot(aes(x=bweight, fill=bw_cat)) +
-    geom_area(stat ="bin", color="#e9ecef", alpha=0.6) +
-    scale_fill_manual(values=c("#69b3a2", "#404080")) +
+bw_df <- bw_df %>%
+  mutate(bw_cat=ifelse(bweight<2500,"LBW","Normal"))
+
+
+  ggplot(data = bw_df, aes(x=bweight, fill=bw_cat)) +
+    geom_area(stat ="bin", color="white", alpha=0.6) +
+    scale_fill_manual(values=c("light green", "gray")) +
   labs(fill="") + ylab("Counts") + xlab("Birth weight") +
   ggtitle("Birth weight in grams")
 
@@ -244,13 +247,13 @@ bw_df %>%
 # Bar graphs for categorical variables
 
 ggplot(bw_df, aes(x=ethnic)) + 
-geom_bar(fill="#69b3a2") + ylab("Counts") + xlab("Ethnicity") + ggtitle("Ethnic groups")
+geom_bar(fill="dark green") + ylab("Counts") + xlab("Ethnicity") + ggtitle("Ethnic groups")
 
 ```
 
 ## ggplot2 themes
 
-- Usually plots with white background look more readable when printed. 
+- Usually plots with white background look more readable when printed.
 
 - Every single component of a ggplot graph can be customized using the generic theme() function, as we will see below. 
 
@@ -263,7 +266,7 @@ geom_bar(fill="#69b3a2") + ylab("Counts") + xlab("Ethnicity") + ggtitle("Ethnic 
 # Bar graphs for categorical variables
 
 ggplot(bw_df, aes(x=ethnic)) + 
-geom_bar(fill="#69b3a2") + ylab("Counts") + xlab("Ethnicity") + ggtitle("Ethnic groups") + theme_bw()
+geom_bar(fill="dark green") + ylab("Counts") + xlab("Ethnicity") + ggtitle("Ethnic groups") + theme_bw()
 
 ```
 
@@ -283,6 +286,8 @@ my_plot<- ggplot(data=bw_df, aes(x=bweight)) +
 geom_area(aes(fill = sex), stat ="bin", alpha=0.6)  + theme_bw()
 
 ggsave("Output/Ethnicity.png", my_plot, width = 15, height = 10)
+
+my_plot
 
 ```
 
