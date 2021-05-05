@@ -1,9 +1,11 @@
 ---
 title: "R Code – Best practices"
 author: "Ken Mwai"
-output: 
+output:
+  beamer_presentation:
+    highlight: tango
   ioslides_presentation:
-    number_sections: false
+    number_sections: no
     theme: spacelab
     highlight: tango
     css: ../../style.css
@@ -193,3 +195,12 @@ summary(mtcars)
 ***
 
 ![](images/code_R.PNG)
+
+***
+
+```{r , eval=FALSE}
+ c<-d(TRUE,TRUE,TRUE,FALSE,TRUE,FALSE)
+Error in d(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE) :
+could not find function "d"
+```
+
