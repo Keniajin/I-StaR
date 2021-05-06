@@ -2,10 +2,10 @@
 title: "Introduction to ggplot2"
 author: "Alice Kamau| Ken Mwai | Mark Otiende"
 date: "5/5/2021"
-output: 
-  slidy_presentation: default
+output:
   beamer_presentation: default
   ioslides_presentation: default
+  slidy_presentation: default
 ---
 
 ```{r setup, include=FALSE}
