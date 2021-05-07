@@ -117,6 +117,48 @@ gapminder %>%
 ## pie chart - a terrible way to visualize categorical data and we choose not to promote a bad culture :)
 
   
+#------------------------------------------------------------------------------#
+# Task 1
+#-----------------------------------------------------------------------------#
+
+## 1.1 Draw a well labeled histogram showing the distribution of gdpPercap
+gapminder %>%
+  ggplot(aes(x=gdpPercap)) + 
+  geom_histogram(color = 'white') +  # what happens when you delete the whole of ",color = 'white' " including the comma?
+  theme_bw()
+
+#------------------------------------------------------------------------------#
+
+## 1.2 Create a column called gdp_cat three categories of gdpPercap where 
+##      category 1 is 0-25000, category 2 is 250001-40000 and 
+##      category 3 is 40000 and above.
 
 
- 
+gapminder_new <- gapminder %>%
+  mutate(gdp_cat=as.factor(ifelse(gdpPercap<25001,1,ifelse(gdpPercap<40001,2,3))))
+
+### check if the ranges are ok
+
+gapminder_new %>%
+  group_by(gdp_cat) %>%
+  summarise(min_gpd=min(gdpPercap), max_gdp=max(gdpPercap))
+
+### plot the grouped bar plot for 2002
+  
+gapminder_new %>%
+  mutate(pop_per_million=pop/1000000) %>%
+  group_by(continent, gdp_cat) %>%
+  summarise(total_pop=sum(pop_per_million)) %>%
+  ggplot(aes(fill=gdp_cat, y=total_pop, x=continent)) + 
+  geom_bar(position="dodge", stat="identity")
+
+### plot the grouped bar plot for all the years - by FACETING
+gapminder_new %>%
+  mutate(pop_per_million=pop/1000000) %>%
+  group_by(continent, gdp_cat, year) %>%
+  summarise(total_pop=sum(pop_per_million)) %>%
+  ggplot(aes(fill=gdp_cat, y=total_pop, x=continent)) + 
+  geom_bar(position="dodge", stat="identity") +
+  facet_wrap(~year) +
+  labs(title = "Distribution of GDP ") +
+  scale_fill_discrete(name="GDP category")
