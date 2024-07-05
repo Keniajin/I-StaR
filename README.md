@@ -98,7 +98,7 @@ R code for data manipulation, analysis, and making graphical plots.
 -   Once you finish your download, the icon for R studio is a white “R”
     in a blue circle.
 
-# Course Outline:
+### Course Outline:
 
 -   Day 1: Background, Getting Started, and fundamentals of R
     programming
