@@ -3203,7 +3203,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 <ul>
 <li>Introductions</li>
-<li>Setting up R up and R Studio</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Overall learning objectives and scope</h2></hgroup><article  id="overall-learning-objectives-and-scope">
+
+<ul>
+<li>Understand basic programming syntax</li>
+<li>Import and manipulate data in R</li>
+<li>Visualize data in R</li>
+<li>Explore relationships between variables</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>In this session, we will:</h2></hgroup><article  id="in-this-session-we-will">
+
+<ul>
+<li>Introduce R and R studio</li>
+<li>Set up and interact with R and R Studio</li>
+<li>Introduce terminology and basic R syntax</li>
+<li>Learn about &lsquo;packages&rsquo;</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r">
@@ -3226,21 +3243,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 <li><p>Strong community</p></li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Introductions</h2></hgroup><article  id="introductions">
+</article></slide><slide class=""><hgroup><h2>Expectations</h2></hgroup><article  id="expectations">
 
 <p>What do you hope to get out of the class?</p>
 
-</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives">
-
-<ul>
-<li>Understanding basic programming syntax</li>
-<li>Reading data into R</li>
-<li>Recoding and manipulating data</li>
-<li>Visualizing data in R</li>
-<li>Exploring relationships between variables</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>Course Format</h2></hgroup><article  id="course-format">
+</article></slide><slide class=""><hgroup><h2>Course format</h2></hgroup><article  id="course-format">
 
 <ul>
 <li>Interactive lecture in the morning.</li>
@@ -3268,7 +3275,147 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 <p>[<a href='https://jhudatascience.org/intro_to_r/' title=''>source</a>]</p>
 
-</article></slide><slide class=""><hgroup><h2>Basic terms</h2></hgroup><article  id="basic-terms-1">
+</article></slide><slide class=""><hgroup><h2>Working with R – RStudio</h2></hgroup><article  id="working-with-r-rstudio">
+
+<p>RStudio is an Integrated Development Environment (IDE) for R</p>
+
+<ul>
+<li>Helps you write code - makes suggestions</li>
+<li>Helps you view the output of your code</li>
+<li>Helps you find errors</li>
+<li>Is NOT a dropdown statistical tool (such as Stata or SPSS)</li>
+</ul>
+
+<p><img src="https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg" alt="RStudio logo" width="30%" style="display: block; margin: auto;" /></p>
+
+<p><sub>[<a href='https://www.rstudio.com/' title=''>source</a>]</sub></p>
+
+<p>RStudio used to be the name of a company that is now called <a href='https://posit.co/' title=''>Posit</a>.</p>
+
+</article></slide><slide class=""><hgroup><h2>RStudio</h2></hgroup><article  id="rstudio">
+
+<p>Easier working with R</p>
+
+<ul>
+<li>Syntax highlighting, code completion, and smart indentation</li>
+<li>Easily manage multiple working directories and projects</li>
+</ul>
+
+<p>More information</p>
+
+<ul>
+<li>Workspace browser and data viewer</li>
+<li>Plot history, zooming, and flexible image and file export</li>
+<li>Integrated R help and documentation</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>RStudio</h2></hgroup><article  id="rstudio-1">
+
+<p>First it is important to be familiar with the layout.</p>
+
+<p><img src="https://docs.posit.co/ide/user/ide/guide/ui/images/rstudio-panes-labeled.jpeg" alt="R Studio Panes" width="65%" style="display: block; margin: auto;" /></p>
+
+<!-- ## Pane 1 (Left side) for writing code -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "The left pane is for writing code."} -->
+
+<!-- knitr::include_graphics("images/Pane1_for_writing.png") -->
+
+<!-- ``` -->
+
+<!-- ## Pane 2 - where objects will be -->
+
+<!-- We will start seeing this tomorrow! -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "We we see objects"} -->
+
+<!-- knitr::include_graphics("images/pane2.png") -->
+
+<!-- ``` -->
+
+<!-- ## Pane 3 - where we get help and see plots -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "The left pane is for writing code."} -->
+
+<!-- knitr::include_graphics("images/pane3.png") -->
+
+<!-- ``` -->
+
+</article></slide><slide class=""><hgroup><h2>Working with R in R Studio - 2 major panes:</h2></hgroup><article  id="working-with-r-in-r-studio---2-major-panes">
+
+<ol>
+<li>The <strong>Source/Editor</strong>: &ldquo;Analysis&rdquo; Script + Interactive Exploration
+
+<ul>
+<li>Static copy of what you did (reproducibility)</li>
+<li>Top by default</li>
+</ul></li>
+<li>The <strong>R Console</strong>: &ldquo;interprets&rdquo; whatever you type
+
+<ul>
+<li>Calculator</li>
+<li>Try things out interactively, then add to your editor</li>
+<li>Bottom by default</li>
+</ul></li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Source / Editor</h2></hgroup><article  id="source-editor">
+
+<ul>
+<li>Where files open to</li>
+<li>Have R code and comments in them</li>
+</ul>
+
+<p>In a .R file (we call a script), code is saved on your disk</p>
+
+<p><img src="https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/SourceEditor.png" width="90%" /></p>
+
+<!-- ## Workspace/Environment ![Workspace](images/r-rstudio-1-ggplot-point-2.png) -->
+
+</article></slide><slide class=""><hgroup><h2>R Console</h2></hgroup><article  id="r-console">
+
+<!-- ![Console](images/rstudio_console.png) -->
+
+<p><img src="https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/Rconsole.png" width="60%" style="display: block; margin: auto;" /></p>
+
+<ul>
+<li>Where code is executed (where things happen)</li>
+<li>You can type here for things interactively to test code</li>
+<li>Code is <strong>not saved</strong> on your disk</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Workspace/Environment</h2></hgroup><article  id="workspaceenvironment">
+
+<!-- ![Workspace](images/rstudio_environment.png) -->
+
+<p><img src="https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/Workspace.png" width="90%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Workspace/Environment</h2></hgroup><article  id="workspaceenvironment-1">
+
+<ul>
+<li>Tells you what <strong>objects</strong> are in R</li>
+<li>What exists in memory/what is loaded?/what did I read in?</li>
+</ul>
+
+<p><strong>History</strong></p>
+
+<ul>
+<li>Shows previous commands.</li>
+<li>Also type the &ldquo;up&rdquo; key in the Console to scroll through previous commands</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Other Panes</h2></hgroup><article  id="other-panes">
+
+<ul>
+<li><strong>Files</strong> - shows the files on your computer of the directory you are working in</li>
+<li><strong>Plots</strong> - pictures and figures</li>
+<li><strong>Packages</strong> - list of R packages that are loaded in memory</li>
+<li><strong>Help</strong> - shows help of R commands</li>
+<li><strong>Viewer</strong> - displays HTML content e.g interactive visualizations</li>
+<li><strong>Presentation</strong> - used to display HTML slides</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Basic R terms</h2></hgroup><article  id="basic-r-terms">
 
 <p><strong>Function</strong> - a function is a piece of code that allows you to do something in R. You can write your own, use functions that come directly from installing R, or use functions from additional packages.</p>
 
@@ -3280,7 +3427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 <pre >## [1] 7</pre>
 
-</article></slide><slide class=""><hgroup><h2>Basic terms</h2></hgroup><article  id="basic-terms-2">
+</article></slide><slide class=""><hgroup><h2>Basic terms</h2></hgroup><article  id="basic-terms-1">
 
 <p><strong>Argument</strong> - what you pass to a function</p>
 
@@ -3300,7 +3447,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 <pre >## [1] 0.53</pre>
 
-</article></slide><slide class=""><hgroup><h2>Basic terms</h2></hgroup><article  id="basic-terms-3">
+</article></slide><slide class=""><hgroup><h2>Basic terms</h2></hgroup><article  id="basic-terms-2">
 
 <p><strong>Object</strong> - an object is something that can be worked with or on in R - can be lots of different things! You can think of objects as <strong>nouns</strong> in R.</p>
 
@@ -3437,7 +3584,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 <li><strong>Functions</strong> (like verbs) perform specific tasks in R and are found within packages.</li>
 <li><strong>Arguments</strong> within functions specify how to perform a function.</li>
 <li><strong>Objects</strong> (like nouns) are data or variables.</li>
-<li>We will be both installing and loading packages.</li>
+<li>RStudio makes working in R easier</li>
+<li>the Editor (top) is for static code like scripts or R Markdown documents</li>
+<li>The console is for testing code (bottom) - best to save your code though!</li>
 </ul></article></slide>
 
 

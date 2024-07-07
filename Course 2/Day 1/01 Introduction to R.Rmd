@@ -8,7 +8,21 @@ output: ioslides_presentation
 ## Welcome!
 
 -   Introductions
--   Setting up R up and R Studio
+
+## Overall learning objectives and scope
+
+- Understand basic programming syntax 
+- Import and manipulate data in R
+- Visualize data in R
+- Explore relationships between variables
+
+## In this session, we will:
+
+- Introduce R and R studio
+- Set up and interact with R and R Studio
+- Introduce terminology and basic R syntax
+- Learn about 'packages'
+
 
 ## What is R?
 
@@ -35,21 +49,15 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/1/1b/R_l
 * Strong community 
 
 
-## Introductions
+## Expectations
 
 What do you hope to get out of the class?
 
 
-## Learning Objectives
-
-- Understanding basic programming syntax
-- Reading data into R
-- Recoding and manipulating data
-- Visualizing data in R
-- Exploring relationships between variables
 
 
-## Course Format
+
+## Course format
 
  * Interactive lecture in the morning.
  * Hands-on practical experience in the afternoon.
@@ -76,7 +84,135 @@ Packages are analogous to a software application like Microsoft Word on your com
 
 [[source](https://jhudatascience.org/intro_to_r/)]
 
-## Basic terms
+
+
+## Working with R -- RStudio
+
+RStudio is an Integrated Development Environment (IDE) for R
+
+-   Helps you write code - makes suggestions
+-   Helps you view the output of your code
+-   Helps you find errors
+-   Is NOT a dropdown statistical tool (such as Stata or SPSS)
+
+```{r, fig.alt="RStudio logo", out.width = "30%", echo = FALSE, fig.align='center'}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/62bcc8535a06077094ca3c29c383e37ad7334311/a263f/assets/img/logo.svg")
+```
+
+<sub>[[source](https://www.rstudio.com/)]</sub>
+
+RStudio used to be the name of a company that is now called [Posit](https://posit.co/).
+
+## RStudio
+
+Easier working with R
+
+-   Syntax highlighting, code completion, and smart indentation
+-   Easily manage multiple working directories and projects
+
+More information
+
+-   Workspace browser and data viewer
+-   Plot history, zooming, and flexible image and file export
+-   Integrated R help and documentation
+
+
+
+## RStudio
+
+First it is important to be familiar with the layout.
+
+```{r, fig.align='center', out.width="65%", echo = FALSE, fig.alt= "R Studio Panes"}
+knitr::include_graphics("https://docs.posit.co/ide/user/ide/guide/ui/images/rstudio-panes-labeled.jpeg")
+```
+
+
+<!-- ## Pane 1 (Left side) for writing code -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "The left pane is for writing code."} -->
+<!-- knitr::include_graphics("images/Pane1_for_writing.png") -->
+<!-- ``` -->
+
+<!-- ## Pane 2 - where objects will be -->
+
+<!-- We will start seeing this tomorrow! -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "We we see objects"} -->
+<!-- knitr::include_graphics("images/pane2.png") -->
+<!-- ``` -->
+
+<!-- ## Pane 3 - where we get help and see plots -->
+
+<!-- ```{r, fig.align='center', out.width="60%", echo = FALSE, fig.alt= "The left pane is for writing code."} -->
+<!-- knitr::include_graphics("images/pane3.png") -->
+<!-- ``` -->
+
+
+## Working with R in R Studio - 2 major panes:
+
+1)  The **Source/Editor**: "Analysis" Script + Interactive Exploration
+    -   Static copy of what you did (reproducibility)
+    -   Top by default
+2)  The **R Console**: "interprets" whatever you type
+    -   Calculator
+    -   Try things out interactively, then add to your editor
+    -   Bottom by default
+
+## Source / Editor
+
+-   Where files open to
+-   Have R code and comments in them
+
+In a .R file (we call a script), code is saved on your disk
+
+```{r, out.width = "90%", echo = FALSE}
+knitr::include_graphics("https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/SourceEditor.png")
+```
+
+<!-- ## Workspace/Environment ![Workspace](images/r-rstudio-1-ggplot-point-2.png) -->
+
+## R Console
+
+<!-- ![Console](images/rstudio_console.png) -->
+
+```{r, out.width = "60%", echo = FALSE, fig.align='center'}
+knitr::include_graphics("https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/Rconsole.png")
+```
+
+-   Where code is executed (where things happen)
+-   You can type here for things interactively to test code
+-   Code is **not saved** on your disk
+
+## Workspace/Environment
+
+<!-- ![Workspace](images/rstudio_environment.png) -->
+
+```{r, out.width = "90%", echo = FALSE}
+knitr::include_graphics("https://users.phhp.ufl.edu/rlp176/Courses/PHC6089/R_notes/img/RStudio/Workspace.png")
+```
+
+## Workspace/Environment
+
+-   Tells you what **objects** are in R
+-   What exists in memory/what is loaded?/what did I read in?
+
+**History**
+
+-   Shows previous commands.
+-   Also type the "up" key in the Console to scroll through previous commands
+
+## Other Panes
+
+-   **Files** - shows the files on your computer of the directory you are working in
+-   **Plots** - pictures and figures
+-   **Packages** - list of R packages that are loaded in memory
+-   **Help** - shows help of R commands
+-   **Viewer** - displays HTML content e.g interactive visualizations
+-   **Presentation** - used to display HTML slides
+
+
+
+## Basic R terms
 
 
 **Function** - a function is a piece of code that allows you to do something in R. You can write your own, use functions that come directly from installing R, or use functions from additional packages.
@@ -252,8 +388,6 @@ We will show you how to resolve any installation issues
 - **Functions** (like verbs) perform specific tasks in R and are found within packages.
 - **Arguments** within functions specify how to perform a function.
 - **Objects** (like nouns) are data or variables.
-- We will be both installing and loading packages.
-
-
-
-
+-  RStudio makes working in R easier
+-  the Editor (top) is for static code like scripts or R Markdown documents
+-  The console is for testing code (bottom) - best to save your code though!
