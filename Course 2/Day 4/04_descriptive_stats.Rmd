@@ -448,6 +448,18 @@ t.test(data=hospital_df_merged ,
        wt_kg ~ gender)
 ```
        
+
+  
+***
+A clean output
+
+```{r}
+t_test_tab <- t.test(data=hospital_df_merged ,
+       wt_kg ~ gender)
+
+broom::tidy(t_test_tab)
+```
+
 ***
 
 ```{r , eval=TRUE}
@@ -462,6 +474,7 @@ t.test(data=df_test ,
 
 ```{r ,eval=T}
 hospital_df_merged %>% 
+  filter(cough!="") %>%   ## remove missing cough
   select(wt_kg, cough) %>%             # keep variables of interest
   tbl_summary(                               # produce summary table
     statistic = wt_kg ~ "{mean} ({sd})", # specify what statistics to show
@@ -475,4 +488,6 @@ hospital_df_merged %>%
 
 
 
+
+## Comparison of proportions 
 

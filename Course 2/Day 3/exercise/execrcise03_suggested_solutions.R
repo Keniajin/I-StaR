@@ -17,29 +17,29 @@ hospital_df <- import("data/line_hospital_data.csv")
 location_df <- import("data/line_hospitals_locations.xlsx")
 
 # Question 1.2CCreate a pipe chain to clean the hospital_df-----------------------------------------------------
-hospital_df_clean <- hospital_df %>% 
+hospital_df_clean <- hospital_df %>%
   ## this function from janitor helps remove spaces and non standard names
-  clean_names() %>%  
+  clean_names() %>%
   ##remove duplicates to avoid warnings during merge
-  distinct(case_id , .keep_all = T) %>% 
+  distinct(case_id , .keep_all = T) %>%
   ## creating BMI
   mutate(ht_m = ht_cm/100 ,
-         BMI = wt_kg/(ht_m^2)) %>% 
+         BMI = wt_kg/(ht_m^2)) %>%
   # create age category column
-  mutate(age_cat = age_categories(        
-    age,                             
+  mutate(age_cat = age_categories(
+    age,
     lower = 0,
     upper = 70,
-    by = 10)) %>% 
+    by = 10)) %>%
   ##convert dates
   mutate(date_of_outcome=dmy(date_of_outcome),
          hosp_date=dmy(hosp_date),
          date_onset=as_date(date_onset)
-         ) %>% 
+         ) %>%
   #creat year and month
   mutate(year_hosp=year(hosp_date),
          month_hosp=month(hosp_date),
-         
+
          year_onset=year(date_onset),
          #Create a `year_onset` and `month_onset` from date onset date data
          month_onset=month(date_onset) ,
@@ -49,12 +49,12 @@ hospital_df_clean <- hospital_df %>%
 
 # 1.3 Merge the datasets --------------------------------------------------
 
-hospital_df_merged <- hospital_df_clean %>% 
+hospital_df_merged <- hospital_df_clean %>%
   left_join(location_df , by = 'case_id')
 
 
 ## clean hospital
-hospital_df_merged <- hospital_df_merged %>% 
+hospital_df_merged <- hospital_df_merged %>%
   # re-code hospital column to have same ne
   mutate(hospital = recode(hospital,
                            # for reference: OLD = NEW
@@ -67,7 +67,6 @@ hospital_df_merged <- hospital_df_merged %>%
                            'Central Hopital'   = 'Central Hospital',
                            'St. Marks Maternity Hopital (SMMH)' = "SMMH",
                            "St. Mark's Maternity Hospital (SMMH)" = "SMMH"))
-
 
 
 
@@ -142,19 +141,19 @@ ggplot(hospital_df_merged,aes(x=wt_kg, y=age, color=gender)) +
 
 # Plot a boxplot weight vs gender
 ggplot(hospital_df_merged,aes(y=wt_kg, x=gender)) +
-  geom_boxplot() 
+  geom_boxplot()
 
 # Plot a boxplot of height by age_group
 ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat)) +
-  geom_boxplot() 
+  geom_boxplot()
 
 # Plot a boxplot of height by age_group color by gender
 ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
-  geom_boxplot() 
+  geom_boxplot()
 
 # Plot a box of ct_blood vs chills
 ggplot(hospital_df_merged,aes(y=ct_blood, x=chills)) +
-  geom_boxplot() 
+  geom_boxplot()
 
 # Plot a box of height by age_group color by gender add scatter. Try adding a layer of theme_bw()
 ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
@@ -165,21 +164,21 @@ ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
 
 # Plot a barplot of gender
 ggplot(hospital_df_merged,aes(x=gender)) +
-  geom_bar() 
+  geom_bar()
 
 # Plot a barplot of chills
 ggplot(hospital_df_merged,aes(x=chills)) +
-  geom_bar() 
+  geom_bar()
 
 # Plot a barplot of age group and color by gender
 ggplot(hospital_df_merged,aes(x=age_cat, fill=gender)) +
-  geom_bar() 
+  geom_bar()
 
 ggplot(hospital_df_merged,aes(x=age_cat, fill=gender)) +
-  geom_bar(position="dodge") 
+  geom_bar(position="dodge")
 
 
-# Export dataset in csv format 
+# Export dataset in csv format
 export(hospital_df_merged,"data/hosp_df_merged.csv")
 
 # SAVING PLOTS
@@ -190,6 +189,23 @@ ht_distribution<-ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender))
 
 ggsave("Day 3/graphs/height_distribution.png", plot = ht_distribution, width = 8, height = 6, dpi = 300)
 ggsave("Day 3/graphs/height_distribution.pdf", plot = ht_distribution, width = 8, height = 6, dpi = 300)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
