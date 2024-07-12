@@ -37,11 +37,13 @@ knitr::opts_chunk$set(fig.align="center" , warning = FALSE, message = FALSE)
 ```
 
 
-## Session objective
+## Session objectives
 
-- <font size="6"> Compute and interpret Pearson’s r between two variables using R. </font>
-- <font size="6"> Set-up a simple linear regression model. </font>
+<font size="6"> 1. Compute and interpret Pearson’s r between two variables. </font>
 
+<font size="6"> 2. Set-up a simple linear regression model. </font>
+
+<font size="6"> 3. Conduct and interpret a chi-square test. </font>
 
 
 ## Data
@@ -133,9 +135,6 @@ ggplot(happy, aes(x=freedom_to_make_life_choices,
 ```
 
 
-
-# Linear regression: step-by-step guide
-
 ## Linear regression model
 
 <font size="5">
@@ -154,7 +153,7 @@ knitr::include_graphics("https://miro.medium.com/v2/resize:fit:800/format:webp/1
 </font>
 
 <font size="5">
- - **1. Linearity:** the relationship betwen the outcome and explanatory variable must be linear. Test visually scatter plot.
+**Linearity:** the relationship betwen the outcome and explanatory variable must be linear. Test visually scatter plot.
 </font>
 
 ```{r, fig.alt="linearity", out.width = "70%", echo = FALSE,fig.align='center'}
@@ -168,7 +167,7 @@ knitr::include_graphics("https://miro.medium.com/v2/resize:fit:1400/format:webp/
 
 
 <font size="5">
-- **2. Homoscedasticity:**  variance of the residuals is constant across all levels of the independent variables.
+**Homoscedasticity:**  variance of the residuals is constant across all levels of the independent variables.
  </font>
  
 ```{r, fig.alt="Homoscedasticity", out.width = "70%", echo = FALSE,fig.align='center'}
@@ -181,7 +180,7 @@ knitr::include_graphics("https://miro.medium.com/v2/resize:fit:4800/format:webp/
  </font>
  
 <font size="5">
-- **3. Normality:**  The residuals, when plotted, follow a normal distribution. 
+**Normality:**  The residuals, when plotted, follow a normal distribution. 
  </font>
  
 ```{r, fig.alt="Normality", out.width = "50%", echo = FALSE,fig.align='center'}
@@ -194,7 +193,7 @@ knitr::include_graphics("https://miro.medium.com/v2/resize:fit:1388/format:webp/
 </font>
 
 <font size="5">
-- **4. Multicollinearity:** this is when the independent variables are highly correlated with each other. Multicollinearity can make it difficult to analyze the individual effects of the features in predicting the target
+**Multicollinearity:** this is when the independent variables are highly correlated with each other. Multicollinearity can make it difficult to analyze the individual effects of the features in predicting the target
 </font>
 
 ## Linear regression model
@@ -233,6 +232,20 @@ summary(model_1)
 
 
 # Chi-square
+
+
+## Chi-square
+<font size="5">
+A Chi-square is used to examine whether there is an association between the row variable and the column variable.
+</font>
+
+
+```{r, fig.alt="barplot", out.width = "75%", echo = FALSE,fig.align='center'}
+knitr::include_graphics("images/table_1.png")
+```
+
+Source: Essentials of Medical Statistics (Betty R. Kirkwood)
+
 
 ## Chi-square test in R
 
