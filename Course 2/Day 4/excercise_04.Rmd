@@ -1,0 +1,91 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE , eval = F)
+```
+
+# Instructions
+ - Clear the environment
+ - Open a new R Script called `day4_exercise_script` where you will do the exercise and later save in the `day4` project directory.
+ - Add the purpose of the file and the author [MANDATORY]
+ - Here are the main activities for this excercise 
+   1) Load the `rio`, `lubridate`,`epikit`, `janitor`, `infer` and `tidyverse` package
+   2) Load the blood *class presusure data* from Mohammed's study. Use the `import` function.
+   3) Clean a string variable
+   4) Explore the distribution of all continuous variables using density, bar and boxplots
+   5) Plot frequency bar plots
+   6) Compare means and proportions
+   
+
+
+### 1 Importing the dataset into R
+
+ - Save the *BP_measure.xlsx* in the `Data` folder
+ - Import the dataset into R using the `import` function
+
+
+
+### 2 Data cleaning
+
+ - Clean the `syst_diast` variable to separate the diastolic and systolic measurements.
+ - Create a new variable (name it `hr_cat`) that classifies `hr` as *high* or *low* using a cutt-off of 72.
+
+
+### Plotting graphs
+
+ - Make a *boxplot* that compares `hr` by `age_cat`
+ - Make a *boxplot* that compares `hr` by `sex`. Make this one horizontal.
+ - Make a *bar graph* that shows the fequencies of male and female respondents
+ 
+
+
+### Data summaries
+
+ - Make data summaries that shows the mean `hr` by sex. Hint: use `group_by()` and `summarise()`
+ - Make data summaries that shows the mean `hr` by age_cat. 
+
+
+### Comparison of means and proportions
+
+ - Compare mean `hr` between males and females and interpret.
+ 
+ *HINT:* 
+ **Helper code**  
+```{r 1.1response, eval=FALSE}
+# example of comparing means
+
+t.test(data=dataframe ,
+       hr_cat_variable ~ hr_cat_variable)
+```
+ 
+ 
+ - Compare proportions of or respondents with high `hr` in males and females. Use the variable `hr_cat`. Interpret.
+ 
+ *HINT:* 
+ **Helper code**  
+```{r 1.2response, eval=FALSE}
+# example of comparing proportions
+
+infer::prop_test(dataframe ,
+                 hr_cat_variable ~ sex)
+```
+
+
+
+### Reshaping
+
+ - Use `select()` to select *age_cat*, *sex* and *hr* and put then in an object named *hr_sex*
+ - Use `pivot_wider()` to reshape *hr_sex* and put the resulting dataset in an object named *hr_sex_wider*, where the new columns will be *male* and *female*
+ 
+ *HINT:* 
+ **Helper code**  
+```{r 1.3response, eval=FALSE}
+# example of reshaping from long to wide
+hr_sex_wider <- hr_sex %>% 
+  pivot_wider(names_from = ,
+              values_from = )
+```
+

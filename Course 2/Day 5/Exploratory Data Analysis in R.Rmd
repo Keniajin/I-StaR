@@ -1,0 +1,294 @@
+---
+title: "Exploratory Data analysis R"
+subtitle: "Pwani R Workshop"
+date: "12th July 2024"
+output:
+  ioslides_presentation: 
+     widescreen: true
+     smaller: true
+  beamer_presentation:
+    theme: CambridgeUS
+    colortheme: sidebartab
+  slidy_presentation: default
+---
+
+
+<style type="text/css">
+body p {
+  color: #000000;
+  font-size: 40px;
+}
+</style>
+
+```{r, include=FALSE}
+library(kableExtra)
+library(tidyverse)
+library(skimr)
+library(gapminder)
+library(lubridate)
+library(rio)
+library(knitr)
+library(tidyr)
+library(jhur)
+library(janitor)
+
+options(knitr.table.format = "latex" )
+knitr::opts_chunk$set(fig.align="center" , warning = FALSE, message = FALSE)
+```
+
+
+## Session objective
+
+- <font size="6"> Compute and interpret Pearson’s r between two variables using R. </font>
+- <font size="6"> Set-up a simple linear regression model. </font>
+
+
+
+## Data
+
+- <font size="6"> We will use data from the World Happiness Report. </font>
+
+- <font size="6"> The csv file (WHR2018.csv) has been provided. </font>
+
+
+# Linear Regression
+
+## Scatter with *happiness!*
+<font size="4">
+What is the relationship between *Confidence in national government* and *Freedom to make life choices?*
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+# import the happy dataset
+happy <- import("../data/WHR2018.csv") %>% 
+  clean_names()
+
+# plot the scatter plot
+ggplot(happy, aes(x=freedom_to_make_life_choices,
+                     y=confidence_in_national_government))+
+  geom_point()+
+  theme_classic()
+
+
+```
+   
+
+## Scatter with *happiness!* - multiple facets
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+
+# plot the scatter plot
+ggplot(happy, aes(x=freedom_to_make_life_choices,
+                     y=confidence_in_national_government)) +
+  geom_point()+
+  theme_classic() +
+  facet_wrap(~year_grp)
+```
+  
+  
+## `cor` for correlation
+
+<font size="5">
+Correlation between *Confidence in national government* and *Freedom to make life choices?*
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+  cor(happy$freedom_to_make_life_choices,
+      happy$confidence_in_national_government)
+
+```
+   
+<font size="5">
+This returns `NA` - why?
+</font>
+
+
+## `cor` for correlation
+
+<font size="5">
+Correlation between *Confidence in national government* and *Freedom to make life choices?*
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+
+happy <- happy %>% 
+  filter(freedom_to_make_life_choices!="",confidence_in_national_government!="" )
+
+  cor(happy$freedom_to_make_life_choices,
+      happy$confidence_in_national_government)
+
+```
+
+
+## plot the line of best fit
+
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+
+ggplot(happy, aes(x=freedom_to_make_life_choices,
+                       y=confidence_in_national_government)) + 
+  geom_point(alpha=.5) +
+  geom_smooth(method=lm, se=FALSE) +
+  theme_classic()
+```
+
+
+
+# Linear regression: step-by-step guide
+
+## Linear regression model
+
+<font size="5">
+A **linear regression model** uses a straight line to describe the relationship between variables.
+</font>
+
+
+```{r, fig.alt="linear model", out.width = "50%", echo = FALSE,fig.align='center'}
+knitr::include_graphics("https://miro.medium.com/v2/resize:fit:800/format:webp/1*eRqtnWb6MRPnA22BIekSEw.png")
+```
+
+
+## Linear regression model
+<font size="5">
+**Step 1:** Make sure your data meets the assumptions 
+</font>
+
+<font size="5">
+ - **1. Linearity:** the relationship betwen the outcome and explanatory variable must be linear. Test visually scatter plot.
+</font>
+
+```{r, fig.alt="linearity", out.width = "70%", echo = FALSE,fig.align='center'}
+knitr::include_graphics("https://miro.medium.com/v2/resize:fit:1400/format:webp/1*VK3bIzymr3bM6_LqDVAnZw.png")
+```
+
+## Linear regression model
+<font size="5">
+**Step 1:** Make sure your data meets the assumptions 
+</font>
+
+
+<font size="5">
+- **2. Homoscedasticity:**  variance of the residuals is constant across all levels of the independent variables.
+ </font>
+ 
+```{r, fig.alt="Homoscedasticity", out.width = "70%", echo = FALSE,fig.align='center'}
+knitr::include_graphics("https://miro.medium.com/v2/resize:fit:4800/format:webp/1*m2L8vYAWhl90JP6-JBuZ1A.png")
+```
+
+## Linear regression model
+<font size="5">
+**Step 1:** Make sure your data meets the assumptions 
+ </font>
+ 
+<font size="5">
+- **3. Normality:**  The residuals, when plotted, follow a normal distribution. 
+ </font>
+ 
+```{r, fig.alt="Normality", out.width = "50%", echo = FALSE,fig.align='center'}
+knitr::include_graphics("https://miro.medium.com/v2/resize:fit:1388/format:webp/1*fvhwBP2bDnxZHodlFh7r6g.jpeg")
+```
+
+## Linear regression model
+<font size="5">
+**Step 1:** Make sure your data meets the assumptions 
+</font>
+
+<font size="5">
+- **4. Multicollinearity:** this is when the independent variables are highly correlated with each other. Multicollinearity can make it difficult to analyze the individual effects of the features in predicting the target
+</font>
+
+## Linear regression model
+
+<font size="5">
+**Step 2:** Perform a linear regression analysis
+</font>
+
+<font size="5">
+- Two lines of code are needed to perform a linear regression analysis.
+</font>
+
+<font size="5">
+- The first line of code makes the linear model, and the second line prints out the summary of the model.
+</font>
+
+
+```{r , echo=TRUE, eval=F, fig.height=3, fig.align='center'}
+model_1 <- lm(freedom_to_make_life_choices ~ confidence_in_national_government, data = happy)
+
+summary(model_1)
+
+```
+
+
+## Linear regression model
+
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+model_1 <- lm(freedom_to_make_life_choices ~ confidence_in_national_government, data = happy)
+
+summary(model_1)
+
+```
+
+
+
+# Chi-square
+
+## Chi-square test in R
+
+<font size="5">
+Step 1:Load dataset
+</font>
+
+
+<font size="4">
+In this example we have created a fictional dataset
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+# Sample data frame (replace this with your actual data)
+
+data_summary <- data.frame(
+  cough = sample(c("Yes", "No"), 100, replace = TRUE),
+  gender = sample(c("Male", "Female"), 100, replace = TRUE)
+)
+
+head(data_summary)
+```
+
+
+## Chi-square test in R
+
+<font size="5">
+Step 2: Create a contingency table
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+# Create the 2 by 2 table
+contingency_table <- table(data_summary$cough, data_summary$gender)
+
+contingency_table
+```
+
+
+## Chi-square test in R
+
+<font size="5">
+Step 3: Perform the chi-square test!
+</font>
+
+```{r , echo=TRUE, eval=T, fig.height=3, fig.align='center'}
+contingency_table
+
+chisq.test(contingency_table)
+```
+
+
+<font size="5">
+What does this mean?
+</font>
+
+
+
+
+

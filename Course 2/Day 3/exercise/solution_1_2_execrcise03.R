@@ -13,7 +13,7 @@ library(janitor)
 library(lubridate)
 library(tidyverse)
 
-hospital_df <- import("Data/line_hospital_data.csv")
+hospital_df <- import("data/line_hospital_data.csv")
 location_df <- import("data/line_hospitals_locations.xlsx")
 
 # Question 1.2CCreate a pipe chain to clean the hospital_df-----------------------------------------------------
@@ -67,3 +67,129 @@ hospital_df_merged <- hospital_df_merged %>%
                            'Central Hopital'   = 'Central Hospital',
                            'St. Marks Maternity Hopital (SMMH)' = "SMMH",
                            "St. Mark's Maternity Hospital (SMMH)" = "SMMH"))
+
+
+
+
+# 1.4 Plot Histogram and density plots--------------------------------------------------
+
+#Plot a histogram and density of the age variable
+ggplot(hospital_df_merged,aes(age)) +
+  geom_histogram(bins = 5)
+
+ggplot(hospital_df_merged,aes(age)) +
+  geom_density()
+
+#Plot a histogram and density of the weight variable
+ggplot(hospital_df_merged,aes(wt_kg)) +
+  geom_histogram()
+
+ggplot(hospital_df_merged,aes(wt_kg)) +
+  geom_density()
+
+#Plot a histogram and density of the ct_blood variable
+ggplot(hospital_df_merged,aes(ct_blood)) +
+  geom_histogram()
+
+ggplot(hospital_df_merged,aes(ct_blood)) +
+  geom_density()
+
+
+#Plot a histogram and density of the BMI variable
+ggplot(hospital_df_merged,aes(BMI)) +
+  geom_histogram()
+
+ggplot(hospital_df_merged,aes(BMI)) +
+  geom_density()
+
+
+
+# 1.5 Create a scatter plot--------------------------------------------------
+
+# weight vs age
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age)) +
+  geom_point()
+
+# Plot a scatter of weight vs age and color the points by gender
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age, color=gender)) +
+  geom_point()
+
+# Plot a scatter of weight vs age and color the points by outcome
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age, color=outcome)) +
+  geom_point()
+
+
+# 1.6 Create a scatter plot + line graph--------------------------------------------------
+# Plot a scatter of weight vs height then add a line graph
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age)) +
+  geom_point() +
+  geom_line()
+
+# Plot a scatter of weight vs height then add a line graph color by gender: Adjust the size of the dots:Change the line typ
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age, color=gender)) +
+  geom_point(size=1, color="red") +
+  geom_line(size=0.8, color="brown", linetype=2)
+
+
+# Plot a scatter of weight vs height then add a line graph color the points by gender: Add the theme_bw
+ggplot(hospital_df_merged,aes(x=wt_kg, y=age, color=gender)) +
+  geom_point(size=1, color="red") +
+  geom_line(size=0.8, color="brown", linetype=2) +
+  theme_bw()
+
+
+# 1.7 Create boxplot using ggplot--------------------------------------------------
+
+# Plot a boxplot weight vs gender
+ggplot(hospital_df_merged,aes(y=wt_kg, x=gender)) +
+  geom_boxplot() 
+
+# Plot a boxplot of height by age_group
+ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat)) +
+  geom_boxplot() 
+
+# Plot a boxplot of height by age_group color by gender
+ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
+  geom_boxplot() 
+
+# Plot a box of ct_blood vs chills
+ggplot(hospital_df_merged,aes(y=ct_blood, x=chills)) +
+  geom_boxplot() 
+
+# Plot a box of height by age_group color by gender add scatter. Try adding a layer of theme_bw()
+ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
+  geom_boxplot()  +
+  geom_point()
+
+# 1.7 Create and saving barplot using ggplot--------------------------------------------------
+
+# Plot a barplot of gender
+ggplot(hospital_df_merged,aes(x=gender)) +
+  geom_bar() 
+
+# Plot a barplot of chills
+ggplot(hospital_df_merged,aes(x=chills)) +
+  geom_bar() 
+
+# Plot a barplot of age group and color by gender
+ggplot(hospital_df_merged,aes(x=age_cat, fill=gender)) +
+  geom_bar() 
+
+ggplot(hospital_df_merged,aes(x=age_cat, fill=gender)) +
+  geom_bar(position="dodge") 
+
+
+# Export dataset in csv format 
+export(hospital_df_merged,"data/hosp_df_merged.csv")
+
+# SAVING PLOTS
+
+ht_distribution<-ggplot(hospital_df_merged,aes(y=ht_m, x=age_cat, color=gender)) +
+  geom_boxplot()  +
+  geom_point()
+
+ggsave("Day 3/graphs/height_distribution.png", plot = ht_distribution, width = 8, height = 6, dpi = 300)
+ggsave("Day 3/graphs/height_distribution.pdf", plot = ht_distribution, width = 8, height = 6, dpi = 300)
+
+
+

@@ -336,7 +336,7 @@ hospital_df_merged %>%
 ***
 
 
-```{r , eval=T , echo=TRUE}
+```{r , eval=T , echo=FALSE}
 hospital_df_merged %>%
   filter(gender!="") %>% 
   group_by(gender) %>% 
@@ -446,10 +446,9 @@ hospital_df_merged <- hospital_df_merged %>%
   filter(gender!="")
 t.test(data=hospital_df_merged ,
        wt_kg ~ gender)
-
-
 ```
-  
+       
+
   
 ***
 A clean output
@@ -486,3 +485,9 @@ hospital_df_merged %>%
 
 
 ## Comparison of proportions 
+
+
+
+
+## Comparison of proportions 
+
