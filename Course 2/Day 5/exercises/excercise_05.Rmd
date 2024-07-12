@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE , eval = F)
 
 ### 2 Subsetting
 
- - Subset the imported dataset and onle keep the following variables:
+ - Subset the imported dataset and only keep the following variables:
     - country
     - year
     - freedom_to_make_life_choices
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE , eval = F)
     - negative_affect
 
 
-### 3 Droping records with missing data
+### 3 Dropping records with missing data
 
  - In all the columns selected above, remove records that have missing data.
 
@@ -48,7 +48,7 @@ knitr::opts_chunk$set(echo = TRUE , eval = F)
 
 
 
-### 4 Linear regression 
+### 5 Linear regression 
  - Fit a linear regression model on `negative_affect` vs. `positive_affect`
  - Interpret the output
 
