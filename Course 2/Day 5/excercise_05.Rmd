@@ -48,9 +48,26 @@ knitr::opts_chunk$set(echo = TRUE , eval = F)
 
 
 
-### 4 Linear regression 
+### 5 Linear regression 
  - Fit a linear regression model on `negative_affect` vs. `positive_affect`
  - Interpret the output
 
+
+### 6 Chi square test
+ - Do a `chi-square` test of facility utilization Pre-covid and during covid
+ - Use the covid_tab table below
+ - What do you think of the association?
+
+```{r}
+## CHi square covid
+covid_tab <- matrix(
+  c(3819, 7076, 215, 1261, 2390, 2345), 
+    ncol=2,  byrow=F ,
+  dimnames = list(c("Maternal service utilization", "Ooutpatient Utilization" ,"Inpatient utilization"),
+                  c("Pre COVID", "During COVID")))
+
+covid_tab
+
+```
 
 
